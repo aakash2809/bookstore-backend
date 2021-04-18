@@ -5,6 +5,7 @@ require("dotenv").config();
 require("./config/index").set(process.env.NODE_ENV, app);
 const config = require("./config/index").get();
 const cors = require('cors');
+const swaggerDocument = require('./app/lib/swagger.json');
 
 app.use(cors());
 
@@ -13,6 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // parse requests of content-type - application/json 
 app.use(express.json());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // listen for request
 app.listen(config.port, () => {
