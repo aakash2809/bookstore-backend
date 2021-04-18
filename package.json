@@ -10,13 +10,22 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "chai": "^4.3.4",
+    "mocha": "^8.3.2",
+    "nodemon": "^2.0.7",
+    "nyc": "^15.1.0"
   },
   "dependencies": {
+    "atob": "^2.1.2",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "joi": "^17.4.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.4",
+    "swagger-ui-express": "^4.1.6",
     "winston": "^3.3.3"
   }
 }
