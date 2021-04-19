@@ -18,10 +18,16 @@ class userServices {
     */
     registerUser = (registrationData, callback) => {
         logger.info(`TRACKED_PATH: Inside services`);
-        userModel.register(registrationData, async (error, registrationResult) => {
+        userModel.register(registrationData, (error, registrationResult) => {
             if (error) {
                 callback(error, null)
             } else {
+                registrationResult = {
+                    success: true,
+                    statusCode: resposnsCode.SUCCESS,
+                    message: 'account registered successfully',
+                    data: registrationResult
+                }
                 callback(null, registrationResult);
             }
         })
