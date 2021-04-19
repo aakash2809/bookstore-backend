@@ -35,6 +35,7 @@ class UserControllers {
             email: request.body.email,
             password: request.body.password,
             confirmPassword: request.body.confirmPassword,
+            role: request.role,
         };
 
         if (request.body.password != request.body.confirmPassword) {
