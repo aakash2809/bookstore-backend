@@ -1,0 +1,128 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0",
+        "title": "Bookstore",
+        "description": "Bookstore Application API"
+    },
+    "host": "localhost:4000",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "User",
+            "description": "API for users in the system"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/user-register": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "register as a end user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "User",
+                        "description": "user object that needs to be register",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UserRegistration"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "registered successfully"
+                    },
+                    "400": {
+                        "description": "Bad Request ,Invalid input"
+                    }
+                }
+            }
+        },
+        "/admin-register": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "register as a end user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "User",
+                        "description": "user object that needs to be register",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UserRegistration"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "registered successfully"
+                    },
+                    "400": {
+                        "description": "Bad Request ,Invalid input"
+                    }
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "JWT": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
+    "definitions": {
+        "UserRegistration": {
+            "type": "object",
+            "required": [
+                "firstName",
+                "lastName",
+                "email",
+                "password",
+                "confirmPassword"
+            ],
+            "properties": {
+                "firstName": {
+                    "type": "string",
+                    "example": "Rahul"
+                },
+                "lastName": {
+                    "type": "string",
+                    "example": "Sahu"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "sahurahul@gmail.com"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "Pattern@35"
+                },
+                "confirmPassword": {
+                    "type": "string",
+                    "example": "Pattern@35"
+                }
+            }
+        }
+    }
+}
