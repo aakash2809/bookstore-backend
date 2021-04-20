@@ -10,6 +10,12 @@ class UserRoutes {
     // register a new user
     app.post("/admin-register", helper.addRole('admin'), userControllers.register);
 
+    // user login
+    app.post('/user-login', userControllers.login);
+
+    // admin login
+    app.post('/admin-login', userControllers.login);
+
   };
 }
 
