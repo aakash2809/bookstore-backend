@@ -53,9 +53,9 @@ class UserControllers {
             (error, registrationResult) => {
                 error
                     ? response.send({
-                        success: false,
-                        status_code: resposnsCode.BAD_REQUEST,
-                        message: error,
+                        success: error.success,
+                        status_code: error.statusCode,
+                        message: error.message,
                     })
                     : response.send({
                         success: registrationResult.success,

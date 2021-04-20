@@ -74,6 +74,19 @@ class UserModel {
             }
         })
     }
+
+
+    /**
+     * @description find email id in database and return data associated with id
+     * @param {*} signUpData holds login credentials
+     * @param {*} callback holds a function 
+    */
+    checkMailExistenceInDb = (signUpData, callback) => {
+        const email = signUpData.email;
+        User.find({ email: `${email}` }, (error, userExistence) => {
+            (error) ? callback(error, null) : callback(null, userExistence);
+        });
+    }
 }
 
 module.exports = new UserModel;

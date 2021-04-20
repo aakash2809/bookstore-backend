@@ -18,19 +18,43 @@ class userServices {
     */
     registerUser = (registrationData, callback) => {
         logger.info(`TRACKED_PATH: Inside services`);
-        userModel.register(registrationData, (error, registrationResult) => {
+        return userModel.checkMailExistenceInDb(registrationData, (error, mailIdExistance) => {
             if (error) {
+                error = {
+                    success: false,
+                    statusCode: resposnsCode.INTERNAL_SERVER_ERROR,
+                    message: error
+                }
                 callback(error, null)
-            } else {
+            } else if (mailIdExistance[0] != null || mailIdExistance[0] != undefined) {
+                let registrationResult = ""
                 registrationResult = {
-                    success: true,
-                    statusCode: resposnsCode.SUCCESS,
-                    message: 'account registered successfully',
-                    data: registrationResult
+                    success: false,
+                    statusCode: resposnsCode.ALREADY_EXIST,
+                    message: 'Mail id alredy registered',
                 }
                 callback(null, registrationResult);
+            } else {
+                userModel.register(registrationData, (error, registrationResult) => {
+                    if (error) {
+                        error = {
+                            success: false,
+                            statusCode: resposnsCode.INTERNAL_SERVER_ERROR,
+                            message: error
+                        }
+                        callback(error, null)
+                    } else {
+                        registrationResult = {
+                            success: true,
+                            statusCode: resposnsCode.SUCCESS,
+                            message: 'account registered successfully',
+                            data: registrationResult
+                        }
+                        callback(null, registrationResult);
+                    }
+                })
             }
-        })
+        });
     }
 }
 
