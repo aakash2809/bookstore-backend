@@ -14,7 +14,7 @@ const logger = require("../../config/logger");
 const bycrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
-    name: {
+    firstName: {
         type: String,
         required: true
     },
@@ -68,7 +68,6 @@ class UserModel {
         const userRegistration = new User(registrationData);
         userRegistration.save((error, registrationResult) => {
             if (error) {
-                error = "already registered"
                 callback(error, null)
             } else {
                 callback(null, registrationResult)

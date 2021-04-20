@@ -30,14 +30,14 @@ class UserControllers {
         }
 
         const registrationDetails = {
-            name: request.body.name,
+            firstName: request.body.firstName,
             lastName: request.body.lastName,
             email: request.body.email,
             password: request.body.password,
             confirmPassword: request.body.confirmPassword,
             role: request.role,
         };
-
+        console.log("registrationDetails", registrationDetails);
         if (request.body.password != request.body.confirmPassword) {
             response.send({
                 success: false,
