@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const logger = require("../../config/logger");
 
 class Helper {
     /**
@@ -19,17 +20,99 @@ class Helper {
      * @description it genrate the token
      */
     genrateToken = (user) => {
+        console.log("token genration input: ", user);
         return jwt.sign(
             {
-                role: user.role,
-                userId: user._id,
+                email: user[0].email,
+                role: user[0].role,
+                userId: user[0]._id,
             },
             process.env.SECRET_KEY,
             {
-                expiresIn: "24h",
+                expiresIn: "24d",
             }
         );
     };
+
+    /**
+      * @description verify user role i.e admin/user
+      * @param {*} req takes token from header
+      * @param {*} res sends response 
+      * @param {*} next 
+      * @returns 
+      */
+    verifyRole = (req, res, next) => {
+        try {
+            const token = req.headers.authorization.split(" ")[1];
+            if (token === undefined) {
+                logger.error('Incorrect token or token is expired');
+                return res.status(401).send({
+                    success: false,
+                    message: 'Incorrect token or token is expired'
+                });
+            }
+            return jwt.verify(token, process.env.SECRET_KEY, (error, decodeData) => {
+                if (error) {
+                    logger.error('Incorrect token or token is expired');
+                    return res.status(401).send({
+                        success: false,
+                        message: 'Incorrect token or token is expiredd ',
+                        error
+                    });
+                } else if (decodeData.role != 'admin') {
+                    logger.error('Authorization failed');
+                    return res.status(401).send({
+                        success: false,
+                        message: 'Authorization failed'
+                    });
+                }
+                req.decodeData = decodeData;
+                next();
+            });
+        } catch (error) {
+            return res.status(401).send({
+                success: false,
+                message: 'some error occured ' + error
+            });
+        }
+    }
+
+    /**
+     * @description verify token authenticates user
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     * @returns 
+     */
+    verifyToken = (req, res, next) => {
+        try {
+            const token = req.headers.authorization.split(" ")[1];
+            if (token === undefined) {
+                logger.error('Incorrect token or token is expired');
+                return res.status(401).send({
+                    success: false,
+                    message: 'Incorrect token or token is expired'
+                });
+            }
+            return jwt.verify(token, process.env.SECRET_KEY, (error, decodeData) => {
+                if (error) {
+                    logger.error('Incorrect token or token is expired');
+                    return res.status(401).send({
+                        success: false,
+                        message: 'Incorrect token or token is expired'
+                    });
+                }
+                req.decodeData = decodeData;
+                next();
+            });
+        } catch {
+            return res.status(401).send({
+                success: false,
+                message: 'some error occured'
+            });
+        }
+    }
+
 }
 
 module.exports = new Helper();

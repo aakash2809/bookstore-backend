@@ -17,7 +17,7 @@ class userServices {
      * @description save request data to database using model methods
      * @param {*} registrationData holds data to be saved in json formate
      * @param {*} callback holds a function 
-    */
+     */
     registerUser = (registrationData, callback) => {
         logger.info(`TRACKED_PATH: Inside services`);
         return userModel.checkMailExistenceInDb(registrationData, (error, mailIdExistance) => {
@@ -59,14 +59,13 @@ class userServices {
     }
 
     /**
- * @description validate credentials and return result accordingly to database using model methods
- * @param {*} loginCredentials holds data to be saved in json formate
- * @param {*} callback holds a function 
-*/
+      * @description validate credentials and return result accordingly to database using model methods
+      * @param {*} loginCredentials holds data to be saved in json formate
+      * @param {*} callback holds a function 
+      */
     validateAndLogin = (loginCredentials, callback) => {
         return userModel.getDetailOfGivenEmailId(loginCredentials, (error, loginResult) => {
-
-            let loginFilteredResult = this.extractObjectFromArray(loginResult);
+            let loginResponse = '';
             if (error) {
                 error = {
                     success: false,
@@ -75,15 +74,15 @@ class userServices {
                 }
                 callback(error, null)
             }
-            else if (loginFilteredResult == null) {
-                loginFilteredResult = {
+            else if (loginResult[0] == null) {
+                loginResponse = {
                     success: false,
                     statusCode: resposnsCode.NOT_FOUND,
                     message: "email id does not exist"
                 }
-                callback(null, loginFilteredResult);
+                callback(null, loginResponse);
             } else {
-                bycrypt.compare(loginCredentials.password, loginFilteredResult.password, (error, result) => {
+                bycrypt.compare(loginCredentials.password, loginResult[0].password, (error, result) => {
                     if (error) {
                         error = {
                             success: false,
@@ -93,8 +92,8 @@ class userServices {
                         callback(error, null);
                     }
                     else if (result) {
-                        var token = jwtAuth.genrateToken(loginFilteredResult);
-                        loginFilteredResult = {
+                        var token = jwtAuth.genrateToken(loginResult);
+                        loginResponse = {
                             success: true,
                             statusCode: resposnsCode.SUCCESS,
                             message: 'login successfull',
@@ -102,7 +101,7 @@ class userServices {
                             user: loginResult
                         }
                         logger.info(` token genrated: ${token}`);
-                        callback(null, loginFilteredResult);
+                        callback(null, loginResponse);
                     } else {
                         error = {
                             success: false,
@@ -114,20 +113,6 @@ class userServices {
                 });
             }
         });
-    }
-
-    /**
-      * @description extract json object from array
-      * @param {*} objectInArray holds data having the array
-      */
-    extractObjectFromArray = (objectInArray) => {
-        var returnObj = null;
-        (objectInArray < 1) ? returnObj : returnObj = {
-            name: objectInArray[0].name,
-            _id: objectInArray[0]._id,
-            password: objectInArray[0].password
-        }
-        return returnObj;
     }
 }
 
