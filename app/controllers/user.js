@@ -37,7 +37,6 @@ class UserControllers {
             confirmPassword: request.body.confirmPassword,
             role: request.role,
         };
-        console.log("registrationDetails", registrationDetails);
         if (request.body.password != request.body.confirmPassword) {
             response.send({
                 success: false,
@@ -61,13 +60,45 @@ class UserControllers {
                         success: registrationResult.success,
                         status_code: registrationResult.statusCode,
                         message: registrationResult.message,
-                        data: registrationResult.data,
                     });
                 logger.info("SUCCESS001: User registered successfully");
             }
         );
     };
 
+    /**
+       * @description login to database
+       * @param {*} request
+       * @param {*} response
+       */
+    login = (request, response) => {
+        logger.info(`TRACKED_PATH: Inside controller`);
+        const loginDetails = {
+            email: request.body.email,
+            password: request.body.password,
+        };
+        logger.info(
+            `INVOKING: getLoginCredentialAndCallForValidation method of login services`
+        );
+        userServices.validateAndLogin(
+            loginDetails,
+            (error, loginResult) => {
+                error
+                    ? response.send({
+                        success: error.success,
+                        statusCode: error.statusCode,
+                        message: error.message,
+                    })
+                    : response.send({
+                        success: loginResult.success,
+                        statusCode: loginResult.statusCode,
+                        message: loginResult.message,
+                        token: loginResult.data,
+                        user: loginResult.user
+                    });
+            }
+        )
+    };
 
 }
 

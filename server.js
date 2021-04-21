@@ -29,3 +29,4 @@ new dbconnection(config.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology
 //Initialize the route
 userRoute.routeToUserController(app);
 module.exports = app;
+
