@@ -82,6 +82,72 @@
                     }
                 }
             }
+        },
+        "/userLogin": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login registered User",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "User",
+                        "description": "user object that needs to be login",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UserLogin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "user registered successfully"
+                    },
+                    "400": {
+                        "description": "Bad Request ,Invalid input"
+                    }
+                }
+            }
+        },
+        "/adminLogin": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login registered Admin",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "User",
+                        "description": "user object that needs to be login",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UserLogin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "user registered successfully"
+                    },
+                    "400": {
+                        "description": "Bad Request ,Invalid input"
+                    }
+                }
+            }
         }
     },
     "securityDefinitions": {
@@ -119,6 +185,23 @@
                     "example": "Pattern@35"
                 },
                 "confirmPassword": {
+                    "type": "string",
+                    "example": "Pattern@35"
+                }
+            }
+        },
+        "UserLogin": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "sahurahul@gmail.com"
+                },
+                "password": {
                     "type": "string",
                     "example": "Pattern@35"
                 }
