@@ -5,16 +5,16 @@ class UserRoutes {
   routeToUserController = (app) => {
 
     // register a new user
-    app.post("/user-register", helper.addRole('user'), userControllers.register);
+    app.post("/userRegister", helper.addRole('user'), userControllers.register);
 
     // register a new user
-    app.post("/admin-register", helper.addRole('admin'), userControllers.register);
+    app.post("/adminRegister", helper.addRole('admin'), userControllers.register);
 
     // user login
-    app.post('/user-login', userControllers.login);
+    app.post('/userLogin', userControllers.login);
 
     // admin login
-    app.post('/admin-login', userControllers.login);
+    app.post('/adminLogin', userControllers.login);
 
   };
 }
