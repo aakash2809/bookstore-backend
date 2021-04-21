@@ -17,7 +17,7 @@
         "http"
     ],
     "paths": {
-        "/user-register": {
+        "/userRegister": {
             "post": {
                 "tags": [
                     "User"
@@ -50,12 +50,12 @@
                 }
             }
         },
-        "/admin-register": {
+        "/adminRegister": {
             "post": {
                 "tags": [
                     "User"
                 ],
-                "summary": "register as a end user",
+                "summary": "register as a admin user",
                 "consumes": [
                     "application/json"
                 ],
