@@ -10,7 +10,11 @@
     "tags": [
         {
             "name": "User",
-            "description": "API for users in the system"
+            "description": "APIs for users"
+        },
+        {
+            "name": "Book",
+            "description": "APIs for Books"
         }
     ],
     "schemes": [
@@ -148,6 +152,193 @@
                     }
                 }
             }
+        },
+        "/book": {
+            "post": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Add a new book",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Book",
+                        "description": "book object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Book"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": " Note inserted successfully"
+                    },
+                    "400": {
+                        "description": "Bad Request ,Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "deprecated": false
+            }
+        },
+        "/books": {
+            "get": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "get all Books available",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "retirved successfully"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "deprecated": false
+            }
+        },
+        "/book/{bookId}": {
+            "post": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "update a existing book detatil ",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "bookId",
+                        "description": "id for Book that need to be update",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "book updated successfully with input id"
+                    },
+                    "404": {
+                        "description": "book not found with input id"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "deprecated": false
+            }
+        },
+        "/deleteBook/{bookId}": {
+            "delete": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "delete book ",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "bookId",
+                        "description": "id for Book that need to be deleted",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "book deleted successfully with input id"
+                    },
+                    "404": {
+                        "description": "book not found with input id"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "deprecated": false
+            }
+        },
+        "/book/addtobag/{bookId}": {
+            "post": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": " add book to cart",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "bookId",
+                        "description": "id for Book that need to be update",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book added to cart successfully"
+                    },
+                    "404": {
+                        "description": "book not found with input id"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "deprecated": false
+            }
         }
     },
     "securityDefinitions": {
@@ -204,6 +395,43 @@
                 "password": {
                     "type": "string",
                     "example": "Pattern@35"
+                }
+            }
+        },
+        "Book": {
+            "type": "object",
+            "required": [
+                "author",
+                "title",
+                "quantity",
+                "price",
+                "description",
+                "image"
+            ],
+            "properties": {
+                "author": {
+                    "type": "string",
+                    "example": "Chetan Bhagat"
+                },
+                "title": {
+                    "type": "string",
+                    "example": "The Girl in Room 105"
+                },
+                "quantity": {
+                    "type": "number",
+                    "example": 12
+                },
+                "price": {
+                    "type": "number",
+                    "example": 193
+                },
+                "description": {
+                    "type": "string",
+                    "example": "Hi I'm Keshavand my life is screwed. I hate my job and my"
+                },
+                "image": {
+                    "type": "string",
+                    "example": "http://books.google.com/books/content?id=GHt_uwEACAAJ&printsec=frontcover&img=1&zoom=5"
                 }
             }
         }
