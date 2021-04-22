@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const logger = require("../../config/logger");
+const bookValidation = require("../middlewares/bookValidation");
+const resposnsCode = require("../../util/staticFile.json");
 
 class Helper {
     /**
@@ -20,7 +22,6 @@ class Helper {
      * @description it genrate the token
      */
     genrateToken = (user) => {
-        console.log("token genration input: ", user);
         return jwt.sign(
             {
                 email: user[0].email,
@@ -33,6 +34,24 @@ class Helper {
             }
         );
     };
+
+    validateBook = (request, response, next) => {
+        let validatedRequestResult = bookValidation.validate(request.body);
+        if (validatedRequestResult.error) {
+            logger.error(`SCHEMAERROR: Request did not match with schema`);
+            response.send({
+                success: false,
+                status_code: resposnsCode.BAD_REQUEST,
+                message: validatedRequestResult.error.details[0].message,
+            });
+            return;
+        } else {
+            return next();
+        }
+
+    }
+
+
     /**
       * @description verify user role 
       * @param {*} req takes token from header
@@ -59,7 +78,6 @@ class Helper {
                         error
                     });
                 } else if (decodeData.role != 'admin') {
-                    console.log("helper", decodeData.role);
                     logger.error('Authorization failed');
                     return res.status(401).send({
                         success: false,

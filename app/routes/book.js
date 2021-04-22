@@ -11,19 +11,19 @@ class BookRoutes {
     routeToUserController = (app) => {
 
         //add new book
-        app.post('/book', helper.verifyRole, book.addBook);
+        app.post('/book', helper.verifyRole, helper.validateBook, book.addBook);
 
         //get all books from db
         app.get('/books', helper.verifyToken, book.findAllBooks);
 
         //update a book by id
-        app.put('/book/:bookId', helper.verifyToken, book.update);
+        app.put('/book/:bookId', helper.verifyToken, helper.validateBook, book.update);
 
         //delete a book by id
-        app.delete('/book/:bookId', helper.verifyToken, book.delete);
+        app.delete('/deleteBook/:bookId', helper.verifyToken, book.delete);
 
         //add to bag book by id
-        app.put('/book/addtobag/:bookId', helper.verifyToken, book.addToBag);
+        //  app.put('/book/addtobag/:bookId', helper.verifyToken, book.addToBag);
     };
 }
 
