@@ -6,6 +6,7 @@ require("./config/index").set(process.env.NODE_ENV, app);
 const config = require("./config/index").get();
 const cors = require('cors');
 const userRoute = require('./app/routes/user');
+const bookRoute = require('./app/routes/book');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./app/lib/swagger.json');
 
@@ -28,5 +29,6 @@ new dbconnection(config.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology
 
 //Initialize the route
 userRoute.routeToUserController(app);
+bookRoute.routeToUserController(app);
 module.exports = app;
 
