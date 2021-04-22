@@ -16,9 +16,9 @@ class Bookservice {
      * @param {*} callback is for controller class methods
      * @returns callback function
      */
-    addBook = (bookData, callback) => {
-        return bookModel.save(bookData, (error, data) => {
-            (error) ? callback(error, null) : callback(null, data);
+    addBook = async (bookData) => {
+        return await bookModel.save(bookData, (error, data) => {
+            (error) ? error : data;
         });
     }
 
@@ -56,9 +56,7 @@ class Bookservice {
      * @returns callback
      */
     deleteBook = (bookData, callback) => {
-        console.log("ser")
         return bookModel.delete(bookData, (error, data) => {
-            console.log("sersdat", data)
             return (error) ? callback(error, null) : callback(null, data);
         })
     }

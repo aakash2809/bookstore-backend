@@ -61,7 +61,6 @@ class BookModel {
     save = async (bookData, callback) => {
         const book = new Book(bookData);
         await book.save((error, bookResult) => {
-            console.log(error)
             error ? callback(error, null) : callback(null, bookResult);
 
         });
