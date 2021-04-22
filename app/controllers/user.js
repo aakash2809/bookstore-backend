@@ -4,9 +4,10 @@
  *               Controller resolve the error using the service layer by invoking its services
  * @author       Aakash Rajak <aakashrajak2809@gmail.com>      
 -----------------------------------------------------------------------------------------------*/
+
 const logger = require("../../config/logger");
 const userServices = require("../services/user");
-const userValidator = require("../middlewares/userValidator");
+const userValidator = require("../middlewares/userValidation");
 const resposnsCode = require("../../util/staticFile.json");
 
 class UserControllers {
