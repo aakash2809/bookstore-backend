@@ -21,10 +21,10 @@ describe('Test User API', () => {
     /**
       * @description  user registration test caces
       */
-    describe('POST /user-register', () => {
+    describe('POST /userRegister', () => {
         it.skip('WhenGivenProperEndPointsAndCorrectInputAndNotRegistered_shouldReturn_registeredUserDetail', () => {
             chai.request(server)
-                .post('/user-register')
+                .post('/userRegister')
                 .send(registrationSamples.validUserObject2)
                 .end((request, response) => {
                     response.should.have.status(responseCode.SUCCESS);
@@ -35,7 +35,7 @@ describe('Test User API', () => {
 
         it("WhenRegisteredOjectPass_shouldReturn_MessageofReason ", () => {
             chai.request(server)
-                .post('/user-register')
+                .post('/userRegister')
                 .send(registrationSamples.validUserObject2)
                 .end((request, response) => {
                     response.body.message.should.have.equal("Mail id already registered");
@@ -44,7 +44,7 @@ describe('Test User API', () => {
 
         it("WhenEmptyNamePass_shouldReturn_ErrorMessageAndStatusCodeForError", (done) => {
             chai.request(server)
-                .post('/user-register')
+                .post('/userRegister')
                 .send(registrationSamples.emptyName)
                 .end((request, response) => {
                     response.body.status_code.should.have.equal(responseCode.BAD_REQUEST);
@@ -55,7 +55,7 @@ describe('Test User API', () => {
 
         it("WhenEmptyEmailPass_shouldReturn_ErrorMessageAndStatusCodeForError", (done) => {
             chai.request(server)
-                .post('/user-register')
+                .post('/userRegister')
                 .send(registrationSamples.emptyEmail)
                 .end((request, response) => {
                     response.body.status_code.should.have.equal(responseCode.BAD_REQUEST);
@@ -65,7 +65,7 @@ describe('Test User API', () => {
         })
         it("WhenNameHavingLessthanThreeCharPass_shouldReturn_ErrorMessageAndStatusCodeForError", (done) => {
             chai.request(server)
-                .post('/user-register')
+                .post('/userRegister')
                 .send(registrationSamples.nameLengthLessThanThree)
                 .end((request, response) => {
                     response.body.status_code.should.have.equal(responseCode.BAD_REQUEST);
@@ -76,7 +76,7 @@ describe('Test User API', () => {
 
         it("WhenPaswordAndConfirmPasswordNotSame_shouldReturn_ErrorMessageAndStatusCodeForError", (done) => {
             chai.request(server)
-                .post('/user-register')
+                .post('/userRegister')
                 .send(registrationSamples.passwordAndConfirmPasswordNotSame)
                 .end((request, response) => {
                     response.body.status_code.should.have.equal(responseCode.BAD_REQUEST);
@@ -85,5 +85,23 @@ describe('Test User API', () => {
             done();
         })
     })
+
+    /**
+      * @descrption user login test
+      */
+    describe('POST /userLogin', () => {
+        it.only('WhenGivenProperEndPointsAndInputCredentialsCorrect_shouldReturn_SuccessMessageAndStatus', (done) => {
+            chai.request(server)
+                .post('/login')
+                .send(loginSamples.validUser2)
+                .end((request, response) => {
+                    response.should.have.status(responseCode.SUCCESS);
+                    response.body.should.be.a('Object');
+                    response.body.should.have.property("message");
+                    response.body.message.should.have.equal("login successfull");
+                })
+            done();
+        });
+    });
 });
 
