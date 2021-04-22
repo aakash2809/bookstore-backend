@@ -33,15 +33,14 @@ class Helper {
             }
         );
     };
-
     /**
-      * @description verify user role i.e admin/user
+      * @description verify user role 
       * @param {*} req takes token from header
       * @param {*} res sends response 
       * @param {*} next 
-      * @returns 
       */
     verifyRole = (req, res, next) => {
+        console.log("helper");
         try {
             const token = req.headers.authorization.split(" ")[1];
             if (token === undefined) {
@@ -60,6 +59,7 @@ class Helper {
                         error
                     });
                 } else if (decodeData.role != 'admin') {
+                    console.log("helper", decodeData.role);
                     logger.error('Authorization failed');
                     return res.status(401).send({
                         success: false,
@@ -82,7 +82,6 @@ class Helper {
      * @param {*} req 
      * @param {*} res 
      * @param {*} next 
-     * @returns 
      */
     verifyToken = (req, res, next) => {
         try {
@@ -112,7 +111,6 @@ class Helper {
             });
         }
     }
-
 }
 
 module.exports = new Helper();
