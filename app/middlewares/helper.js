@@ -59,7 +59,6 @@ class Helper {
       * @param {*} next 
       */
     verifyRole = (req, res, next) => {
-        console.log("helper");
         try {
             const token = req.headers.authorization.split(" ")[1];
             if (token === undefined) {

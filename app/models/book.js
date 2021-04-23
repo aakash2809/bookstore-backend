@@ -20,6 +20,11 @@ const bookSchema = new mongoose.Schema(
         quantity: {
             type: Number,
             required: true,
+            unique: true,
+            validate: {
+                validator: Number.isInteger,
+                message: '{VALUE} is not an integer value'
+            }
         },
         price: {
             type: Number,

@@ -14,6 +14,6 @@ module.exports = joi.object({
     title: joi.string().required().min(3),
     quantity: joi.number().min(3),
     price: joi.number().min(3),
-    description: joi.string().required(),
+    description: joi.string().required().min(6),
     image: joi.string().required().min(6)
 });

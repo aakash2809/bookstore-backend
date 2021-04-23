@@ -67,7 +67,6 @@ class Bookservice {
      */
     addToBag = async (bookData) => {
         const data = await bookModel.addToBag(bookData)
-        console.log("data", data)
         return data
     }
 }
