@@ -23,7 +23,7 @@ class BookRoutes {
         app.delete('/deleteBook/:bookId', helper.verifyToken, book.delete);
 
         //add to bag book by id
-        //  app.put('/book/addtobag/:bookId', helper.verifyToken, book.addToBag);
+        app.put('/book/addtobag/:bookId', helper.verifyToken, book.addToBag);
     };
 }
 

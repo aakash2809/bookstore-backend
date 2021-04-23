@@ -111,7 +111,9 @@ class BookModel {
      * @param {*} userData 
      */
     addToBag = async (userData) => {
-
+        return await Book.findByIdAndUpdate(
+            userData.bookId, { isAddedToBag: true }, { new: true },
+        );
     }
 }
 

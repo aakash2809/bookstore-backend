@@ -200,6 +200,39 @@ class BookController {
      * @param {*} res 
      */
     addToBag = (req, res) => {
+        try {
+            const addToBagData = {
+                bookId: req.params.bookId,
+                adminId: req.decodeData.userId,
+            };
+            bookService
+                .addToBag(addToBagData)
+                .then((data) => {
+                    if (!data) {
+                        return res.send({
+                            success: false,
+                            status_code: resposnsCode.Not_Found,
+                            message: "book not found with id : " + req.params.bookId + error,
+                        });
+                    }
+                    return res.send({
+                        status: resposnsCode.SUCCESS,
+                        message: " added to bag successfully !",
+                    });
+                })
+                .catch((error) => {
+                    return res.send({
+                        status: resposnsCode.INTERNAL_SERVER_ERROR,
+                        message: "Some error occurred while adding to bag" + error,
+                    });
+                });
+        } catch (error) {
+            logger.error("Some error occurred while adding to bag"),
+                res.send({
+                    status: resposnsCode.INTERNAL_SERVER_ERROR,
+                    message: "Some error occurred while adding to bag" + error,
+                });
+        }
     }
 }
 
