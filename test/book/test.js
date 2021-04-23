@@ -239,7 +239,7 @@ describe("books API", () => {
     });
 
     describe("DELETE /deleteBook/bookID", function () {
-        it.skip("givenbooks_WhenGivenProperId_ShouldDelete_book", (done) => {
+        it("givenbooks_WhenGivenProperId_ShouldDelete_book", (done) => {
             const bookID = bookData.books.bookToDelete.bookId;
             chai
                 .request(server)

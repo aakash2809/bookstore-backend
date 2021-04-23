@@ -90,7 +90,7 @@ describe('Test User API', () => {
       * @descrption user login test
       */
     describe('POST /userLogin', () => {
-        it.only('WhenGivenProperEndPointsAndInputCredentialsCorrect_shouldReturn_SuccessMessageAndStatus', (done) => {
+        it('WhenGivenProperEndPointsAndInputCredentialsCorrect_shouldReturn_SuccessMessageAndStatus', (done) => {
             chai.request(server)
                 .post('/userLogin')
                 .send(loginSamples.validUser2)
