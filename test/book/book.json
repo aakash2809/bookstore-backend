@@ -1,0 +1,108 @@
+{
+    "books": {
+        "getbookById": {
+            "bookId": "22762bd3-0675-49ac-932d-159b84b45278",
+            "title": "5pointsomeone",
+            "description": "story",
+            "author": "Chetan Bhagat",
+            "quantity": 2,
+            "price": 200,
+            "image": "someimage"
+        },
+        "bookToUpdate": {
+            "title": "pointsomeone",
+            "description": " best story ",
+            "author": "Chetan Bhagat",
+            "quantity": 12,
+            "price": 300,
+            "image": "someimage"
+        },
+        "bookToDelete": {
+            "bookId": "7fc436b4-e163-46a1-ace4-312a89d371e2"
+        },
+        "bookToPost": {
+            "title": "5pointsomeone",
+            "description": "aakash Hello",
+            "author": "Chetan Bhagat",
+            "quantity": 12,
+            "price": 300,
+            "image": "someimage"
+        },
+        "invalidbookToPost": {
+            "title": "5pointsomeone",
+            "description": "pH",
+            "author": "Chetan Bhagat",
+            "quantity": 12,
+            "price": 300,
+            "image": "someimage"
+        },
+        "bookWithouttitle": {
+            "bookId": "22762bd3-0675-49ac-932d-159b84b45278",
+            "description": "Hello",
+            "author": "Chetan Bhagat",
+            "quantity": 12,
+            "price": 300,
+            "image": "someimage"
+        },
+        "bookWithoutDescription": {
+            "bookId": "22762bd3-0675-49ac-932d-159b84b45278",
+            "title": "5pointsomeone",
+            "author": "Chetan Bhagat",
+            "quantity": 12,
+            "price": 300,
+            "image": "someimage"
+        },
+        "bookWithEmptyTitle": {
+            "author": "Chetan Bhagat",
+            "title": "",
+            "description": " hi Hello",
+            "quantity": 12,
+            "price": 300,
+            "image": "someimage"
+        },
+        "bookWithImproperAuthor": {
+            "title": "5pointsomeone",
+            "description": "hell",
+            "author": "C",
+            "quantity": 12,
+            "price": 300,
+            "image": "someimage"
+        },
+        "bookWithImproperDescription": {
+            "title": "5pointsomeone",
+            "description": "A",
+            "author": "B",
+            "quantity": 12,
+            "price": 300,
+            "image": "someimage"
+        },
+        "bookWithoutIntegerValueForQuantity": {
+            "title": "5pointsomeone",
+            "description": "story",
+            "author": "Chetan Bhagat",
+            "quantity": "anything",
+            "price": 300,
+            "image": "someimage"
+        },
+        "bookWithoutIntegerValueForPrice": {
+            "title": "5pointsomeone",
+            "description": "story",
+            "author": "Chetan Bhagat",
+            "quantity": 2,
+            "price": "anyValue",
+            "image": "someimage"
+        },
+        "properToken": {
+            "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaHVyYWh1bEBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJ1c2VySWQiOiI2MDgwYjAxYjA0OTgwMTE2Y2NmNmE1MWEiLCJpYXQiOjE2MTkwNDY2MjksImV4cCI6MTYyMTEyMDIyOX0.jlNPtCAa-zYwF3yemZsV12nlabB4-PT7Z-JxFe4lkss"
+        },
+        "ImproperToken": {
+            "token": "'JhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbElkIjoiZ2h1c2FsaWthcnBheWFsQGdtYWlsLmNvbSIsImlkIjoiNjAxOGRiOWM3MzU1YTkyM2I4OGFmM2UwIiwiaWF0IjoxNjEyMzgyMzg3LCJleHAiOjE2MTI0Njg3ODd9.6I8fMEnAS0_PpSMl5ixe0zPWhh0Vpx9QaNFQYShJLjA'"
+        },
+        "registeredBookId": {
+            "bookId": "6082addef119821fe8760eb9"
+        },
+        "improperId": {
+            "bookId": "7fc436b4-e163-46a1-ace4-312a89d371"
+        }
+    }
+}
