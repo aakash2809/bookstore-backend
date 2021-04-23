@@ -11,6 +11,7 @@ const chai = require('chai');
 const server = require('../../server');
 const chaiHttp = require('chai-http');
 const registrationSamples = require('./testSamples/registration.json');
+const loginSamples = require('./testSamples/loginSamples.json');
 const responseCode = require('../../util/staticFile.json');
 
 chai.should();

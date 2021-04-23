@@ -51,7 +51,6 @@ describe("books API", () => {
         // test the POST API when provided proper data
         it("givenbooks_WhenGivenPropertitleAnddescription_ShouldPostbook", (done) => {
             const book = bookData.books.bookToPost;
-            const token = bookData.books.properToken.token;
             chai
                 .request(server)
                 .post("/book/")
@@ -66,7 +65,6 @@ describe("books API", () => {
 
         it("givenbooks_WhenNotGivenQuantityAndPriceInInteger_ShouldNotPostbook", (done) => {
             const book = bookData.books.bookWithoutIntegerValueForPrice;
-            const token = bookData.books.properToken.token;
             chai
                 .request(server)
                 .post("/book/")
@@ -81,7 +79,6 @@ describe("books API", () => {
 
         it("givenbooks_WhenNotGivenQuantityAndPriceInInteger_ShouldNotPostbook", (done) => {
             const book = bookData.books.bookWithoutIntegerValueForQuantity;
-            const token = bookData.books.properToken.token;
             chai
                 .request(server)
                 .post("/book/")
@@ -97,7 +94,6 @@ describe("books API", () => {
 
         it("givenbooks_WhenGivenNotPropertitleAnddescription_ShouldNotPostbook", (done) => {
             const book = bookData.books.invalidbookToPost;
-            const token = bookData.books.properToken.token;
             chai
                 .request(server)
                 .post("/book/")
@@ -113,7 +109,6 @@ describe("books API", () => {
         // test the POST API when provided improper data
         it("givenbooks_WhenNotGivenPropertitleAndDescription_ShouldNotPostbook", (done) => {
             const book = bookData.books.bookWithouttitle;
-
             chai
                 .request(server)
                 .post("/book/")
@@ -128,7 +123,6 @@ describe("books API", () => {
 
         it("givenbooks_WhenNotGivenDescription_ShouldNotPostbook", (done) => {
             const book = bookData.books.bookWithoutDescription;
-            const token = bookData.books.properToken.token;
             chai
                 .request(server)
                 .post("/book/")
@@ -238,14 +232,16 @@ describe("books API", () => {
         });
     });
 
-    describe("DELETE /deleteBook/bookID", function () {
-        it("givenbooks_WhenGivenProperId_ShouldDelete_book", (done) => {
-            const bookID = bookData.books.bookToDelete.bookId;
+    describe("DELETE /deleteBook/bookId", function () {
+        it.skip("givenbooks_WhenGivenProperId_ShouldDelete_book", (done) => {
             chai
                 .request(server)
-                .delete("deleteBook/" + bookID)
+                .delete("/deleteBook/" + bookId)
                 .set("Authorization", token)
                 .end((err, res) => {
+                    console.log("res", res.body);
+                    res.body.status_code.should.have.equal(resposnsCode.SUCCESS);
+                    res.body.message.should.have.equal('book deleted successfully!');
                     done();
                 });
         });
