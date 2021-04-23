@@ -92,7 +92,7 @@ describe('Test User API', () => {
     describe('POST /userLogin', () => {
         it.only('WhenGivenProperEndPointsAndInputCredentialsCorrect_shouldReturn_SuccessMessageAndStatus', (done) => {
             chai.request(server)
-                .post('/login')
+                .post('/userLogin')
                 .send(loginSamples.validUser2)
                 .end((request, response) => {
                     response.should.have.status(responseCode.SUCCESS);
