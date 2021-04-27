@@ -233,7 +233,7 @@ describe("books API", () => {
     });
 
     describe("DELETE /deleteBook/bookId", function () {
-        it.skip("givenbooks_WhenGivenProperId_ShouldDelete_book", (done) => {
+        it("givenbooks_WhenGivenProperId_ShouldDelete_book", (done) => {
             chai
                 .request(server)
                 .delete("/deleteBook/" + bookId)
