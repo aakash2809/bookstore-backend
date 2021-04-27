@@ -12,6 +12,7 @@ const server = require('../../server');
 const chaiHttp = require('chai-http');
 const registrationSamples = require('./testSamples/registration.json');
 const loginSamples = require('./testSamples/loginSamples.json');
+const forgotPassword = require('./testSamples/forgotPassword.json');
 const responseCode = require('../../util/staticFile.json');
 
 chai.should();
@@ -104,5 +105,33 @@ describe('Test User API', () => {
             done();
         });
     });
+
+    /**
+      * @description user forgotPassword test
+      */
+    describe('POST /forgotPassword', () => {
+        it.only('WhenGivenProperEndPointsAndInputCorrect_shouldReturn_SuccessStatusAndResetLink', (done) => {
+            chai.request(server)
+                .post('/forgotPassword')
+                .send(forgotPassword.validEmail)
+                .end((request, response) => {
+                    token = `"${response.body.data}"`;
+                    response.should.have.status(responseCode.SUCCESS);
+                    response.body.should.be.a('Object');
+                })
+            done();
+        })
+
+        it.only('WhenGivenProperEndPointsAndInputCorrect_shouldReturn_SuccessStatusAndResetLink', (done) => {
+            chai.request(server)
+                .post('/forgotPassword')
+                .send(forgotPassword.invalidEmail)
+                .end((request, response) => {
+                    response.body.statusCode.should.have.equal(responseCode.NOT_FOUND);
+                    response.body.message.should.have.equal('User with this email id does not exist')
+                })
+            done();
+        })
+    })
 });
 
