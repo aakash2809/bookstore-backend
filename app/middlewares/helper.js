@@ -121,10 +121,10 @@ class Helper {
                 req.decodeData = decodeData;
                 next();
             });
-        } catch {
+        } catch (error) {
             return res.status(401).send({
                 success: false,
-                message: 'some error occured'
+                message: error
             });
         }
     }
