@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+var nodemailer = require("nodemailer");
+var ejs = require("ejs");
 const logger = require("../../config/logger");
 const bookValidation = require("../middlewares/bookValidation");
 const resposnsCode = require("../../util/staticFile.json");
@@ -48,9 +50,7 @@ class Helper {
         } else {
             return next();
         }
-
     }
-
 
     /**
       * @description verify user role 
@@ -128,6 +128,47 @@ class Helper {
             });
         }
     }
+
+    /*
+     * @description this function sending mail for reset password 
+     */
+    sendMailToResetPassword = async (user, token, callback) => {
+        var transporter = nodemailer.createTransport({
+            service: "gmail",
+            port: process.env.PORT,
+            secure: true,
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+        });
+        await ejs.renderFile(
+            "app/views/forgotPassword.ejs",
+            {
+                name: user.firstName,
+                resetLink: `${process.env.CLIENT_URL}/resetpassword/${token}`,
+            },
+            (err, data) => {
+                if (err) {
+                } else {
+                    var mainOptions = {
+                        from: process.env.EMAIL_USER,
+                        to: user.email,
+                        subject: "Reset Password",
+                        html: data,
+                    };
+                    transporter.sendMail(mainOptions, (error, mailInfo) => {
+                        if (error) {
+                            callback(error, null);
+                        } else {
+                            mailInfo = `${process.env.CLIENT_URL}/resetpassword/${token}`;
+                            callback(null, mailInfo);
+                        }
+                    });
+                }
+            }
+        );
+    };
 }
 
 module.exports = new Helper();
