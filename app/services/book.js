@@ -29,8 +29,8 @@ class Bookservice {
      * @param userId contains admin information
      * @param {*} callback is for controller class methods
      */
-    getBooks = (userId, callback) => {
-        bookModel.getBooks(userId, (error, data) => {
+    getBooks = (callback) => {
+        bookModel.getBooks((error, data) => {
             return (error) ? callback(error, null) : callback(null, data);
         });
     }

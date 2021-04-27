@@ -14,7 +14,7 @@ class BookRoutes {
         app.post('/book', helper.verifyRole, helper.validateBook, book.addBook);
 
         //get all books from db
-        app.get('/books', helper.verifyToken, book.findAllBooks);
+        app.get('/books', book.findAllBooks);
 
         //update a book by id
         app.put('/book/:bookId', helper.verifyToken, helper.validateBook, book.update);

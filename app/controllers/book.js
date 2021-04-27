@@ -60,8 +60,7 @@ class BookController {
      */
     findAllBooks = (req, res) => {
         try {
-            const userId = req.decodeData.userId;
-            bookService.getBooks(userId, (error, data) => {
+            bookService.getBooks((error, data) => {
                 if (error) {
                     return res.status(500).send({
                         success: false,
@@ -90,9 +89,7 @@ class BookController {
         }
     }
 
-
     /**
-     *
      * @description update book in database
      * @method update is service class method
      * @param res is used to send the response

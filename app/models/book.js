@@ -73,13 +73,14 @@ class BookModel {
 
     /**
      * @description get all books from database
-     * @param {*} userId holds athorizes person id
      * @param {*} callback is for service class holds error and user
      */
-    getBooks = async (userId, callback) => {
-        await Book.find({ adminId: userId }, (error, noteData) => {
+    getBooks = async (callback) => {
+        await Book.find({}, (error, noteData) => {
+            console.log("model all books", noteData);
             error ? callback(error, null) : callback(null, noteData);
-        });
+        })
+
     }
 
     /**
