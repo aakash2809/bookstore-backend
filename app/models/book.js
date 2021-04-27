@@ -77,7 +77,6 @@ class BookModel {
      */
     getBooks = async (callback) => {
         await Book.find({}, (error, noteData) => {
-            console.log("model all books", noteData);
             error ? callback(error, null) : callback(null, noteData);
         })
 
