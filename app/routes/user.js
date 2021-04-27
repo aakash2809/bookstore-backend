@@ -16,6 +16,9 @@ class UserRoutes {
     // admin login
     app.post('/adminLogin', userControllers.login);
 
+    //forgot password
+    app.post("/forgotPassword", userControllers.forgotPassword);
+
   };
 }
 

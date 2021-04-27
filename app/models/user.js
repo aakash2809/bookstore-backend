@@ -42,6 +42,10 @@ const userSchema = new mongoose.Schema({
 },
     {
         timestamps: true,
+    },
+
+    {
+        autoIndex: false
     }
 );
 
@@ -96,6 +100,18 @@ class UserModel {
         const email = loginCredential.email;
         User.find({ email: `${email}` }, (error, loginResult) => {
             (error) ? callback(error, null) : callback(null, loginResult);
+        });
+    }
+
+    /**
+    * @description find email id in database and 
+    * callback with user data or error
+    * @param {*} email holds email id
+    * @param {*} callback holds a function 
+   */
+    forgetPassword = (email, callback) => {
+        User.find(email, (error, user) => {
+            (error) ? callback(error, null) : callback(null, user);
         });
     }
 }

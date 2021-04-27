@@ -2,13 +2,12 @@
  * @module         services
  * @file           userRegistration.services.js
  * @description    This file contain all the service  
- * @author         Aakash Rajak <aakashrajak2809@gmail.com>
-       
+ * @author         Aakash Rajak <aakashrajak2809@gmail.com>  
 ------------------------------------------------------------------------------------------*/
 const userModel = require('../models/user');
 const logger = require("../../config/logger");
 const resposnsCode = require("../../util/staticFile.json");
-const jwtAuth = require("../middlewares/helper");
+const helper = require("../middlewares/helper");
 const bycrypt = require('bcryptjs');
 
 class userServices {
@@ -92,7 +91,7 @@ class userServices {
                         callback(error, null);
                     }
                     else if (result) {
-                        var token = jwtAuth.genrateToken(loginResult);
+                        var token = helper.genrateToken(loginResult);
                         loginResponse = {
                             success: true,
                             statusCode: resposnsCode.SUCCESS,
@@ -113,6 +112,49 @@ class userServices {
                 });
             }
         });
+    }
+
+    /**
+    * @description validate credentials and return result accordingly to database using model methods
+    * @param {*} email 
+    * @param {*}  callback callback funcntion
+    */
+    getEmail = (email, callback) => {
+        logger.info(`TRACKED_PATH: Inside services getEmail`);
+        userModel.forgetPassword(email, (error, result) => {
+            if (error) {
+                callback(error, null);
+            }
+            else if (result.length < 1) {
+                result = {
+                    message: "User with this email id does not exist",
+                    status: resposnsCode.NOT_FOUND,
+                    data: null
+                }
+                callback(null, result);
+            }
+            else {
+                var token = helper.genrateToken(result);
+                helper.sendMailToResetPassword(result[0], token, (error, mailRespnse) => {
+                    if (error) {
+                        error = {
+                            success: false,
+                            statusCode: resposnsCode.INTERNAL_SERVER_ERROR,
+                            message: error,
+                        }
+                        callback(error, null);
+                    } else {
+                        mailRespnse = {
+                            success: true,
+                            statusCode: resposnsCode.SUCCESS,
+                            message: 'mail sent successfully to given email id',
+                            data: mailRespnse
+                        }
+                        callback(null, mailRespnse);
+                    }
+                });
+            }
+        })
     }
 }
 

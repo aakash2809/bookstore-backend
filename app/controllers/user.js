@@ -101,6 +101,39 @@ class UserControllers {
         )
     };
 
+    /**
+   * @description forgot password
+   * @param {*} request
+   * @param {*} response
+   */
+    forgotPassword = (request, response) => {
+        const { email } = request.body;
+        logger.info(`INVOKING: getEmail method of login services`);
+        userServices.getEmail({ email }, (error, result) => {
+            try {
+                console.log(result)
+                if (error) {
+                    return response.send({
+                        success: false,
+                        statusCode: resposnsCode.INTERNAL_SERVER_ERROR,
+                        message: "internal server error",
+                    })
+
+                } else {
+                    return response.send({
+                        success: true,
+                        statusCode: result.status,
+                        message: result.message,
+                        data: result.data,
+                    })
+                }
+            } catch (error) {
+                return error;
+            }
+
+        });
+    };
+
 }
 
 module.exports = new UserControllers();
