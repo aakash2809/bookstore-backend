@@ -50,6 +50,12 @@
                     },
                     "400": {
                         "description": "Bad Request ,Invalid input"
+                    },
+                    "401": {
+                        "description": "Email id does already exist"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
@@ -83,6 +89,12 @@
                     },
                     "400": {
                         "description": "Bad Request ,Invalid input"
+                    },
+                    "401": {
+                        "description": "Email id does already exist"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
@@ -116,6 +128,12 @@
                     },
                     "400": {
                         "description": "Bad Request ,Invalid input"
+                    },
+                    "404": {
+                        "description": "Email id does not exist"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
@@ -149,6 +167,51 @@
                     },
                     "400": {
                         "description": "Bad Request ,Invalid input"
+                    },
+                    "404": {
+                        "description": "Email id does not exist"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/forgotPassword": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Send reset password link to user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "User",
+                        "description": "user object that needs to be forgot password",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ForgotPassword"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "user mail sent successfully"
+                    },
+                    "400": {
+                        "description": "Bad Request ,Invalid input"
+                    },
+                    "404": {
+                        "description": "Email id does not exist"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
@@ -182,6 +245,9 @@
                     },
                     "400": {
                         "description": "Bad Request ,Invalid input"
+                    },
+                    "500": {
+                        "description": "internal server error"
                     }
                 },
                 "security": [
@@ -395,6 +461,18 @@
                 "password": {
                     "type": "string",
                     "example": "Pattern@35"
+                }
+            }
+        },
+        "ForgotPassword": {
+            "type": "object",
+            "required": [
+                "email"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "aakashrajak2809@gmail.com"
                 }
             }
         },
