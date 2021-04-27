@@ -110,7 +110,7 @@ describe('Test User API', () => {
       * @description user forgotPassword test
       */
     describe('POST /forgotPassword', () => {
-        it.only('WhenGivenProperEndPointsAndInputCorrect_shouldReturn_SuccessStatusAndResetLink', (done) => {
+        it('WhenGivenProperEndPointsAndInputCorrect_shouldReturn_SuccessStatusAndResetLink', (done) => {
             chai.request(server)
                 .post('/forgotPassword')
                 .send(forgotPassword.validEmail)
@@ -122,7 +122,7 @@ describe('Test User API', () => {
             done();
         })
 
-        it.only('WhenGivenProperEndPointsAndInputCorrect_shouldReturn_SuccessStatusAndResetLink', (done) => {
+        it('WhenGivenProperEndPointsAndInputCorrect_shouldReturn_SuccessStatusAndResetLink', (done) => {
             chai.request(server)
                 .post('/forgotPassword')
                 .send(forgotPassword.invalidEmail)
