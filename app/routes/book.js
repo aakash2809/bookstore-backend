@@ -24,6 +24,9 @@ class BookRoutes {
 
         //add to bag book by id
         app.put('/book/addtobag/:bookId', helper.verifyToken, book.addToBag);
+
+        //remove from bag by id
+        app.put('/book/removeFromBag/:bookId', helper.verifyToken, book.removeFromBag);
     };
 }
 

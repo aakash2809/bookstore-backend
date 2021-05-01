@@ -120,6 +120,16 @@ class BookModel {
             userData.bookId, { isAddedToBag: true }, { new: true },
         );
     }
+
+    /**
+   * @description add a book to bag by making isAddedToBag flag to false
+   * @param {*} userData 
+   */
+    removeFromBag = async (userData) => {
+        return await Book.findByIdAndUpdate(
+            userData.bookId, { isAddedToBag: false }, { new: true },
+        );
+    }
 }
 
 module.exports = new BookModel();

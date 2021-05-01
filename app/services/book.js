@@ -22,7 +22,6 @@ class Bookservice {
         });
     }
 
-
     /**
      * @description add new book to bookstore
      * @method getBooks is a model class method
@@ -67,6 +66,15 @@ class Bookservice {
      */
     addToBag = async (bookData) => {
         const data = await bookModel.addToBag(bookData)
+        return data
+    }
+
+    /**
+    *  @description add a book to bag by making isAddedToBag flag false
+    * @param {*} bookData 
+    */
+    removeFromBag = async (bookData) => {
+        const data = await bookModel.removeFromBag(bookData)
         return data
     }
 }

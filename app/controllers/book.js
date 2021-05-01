@@ -231,6 +231,48 @@ class BookController {
                 });
         }
     }
+
+    /**
+    * @description fremove from book by making isAddedToBag  true to false
+    * @method removeFromBag is service class method holds addToBagData
+    * @param {*} req 
+    * @param {*} res 
+    */
+    removeFromBag = (req, res) => {
+        try {
+            const removeFromBag = {
+                bookId: req.params.bookId,
+                adminId: req.decodeData.userId,
+            };
+            bookService
+                .removeFromBag(removeFromBag)
+                .then((data) => {
+                    if (!data) {
+                        return res.send({
+                            success: false,
+                            status_code: resposnsCode.Not_Found,
+                            message: "book not found with id : " + req.params.bookId + error,
+                        });
+                    }
+                    return res.send({
+                        status: resposnsCode.SUCCESS,
+                        message: " removed from bag successfully !",
+                    });
+                })
+                .catch((error) => {
+                    return res.send({
+                        status: resposnsCode.INTERNAL_SERVER_ERROR,
+                        message: "Some error occurred while removing from bag" + error,
+                    });
+                });
+        } catch (error) {
+            logger.error("Some error occurred while removing from  bag"),
+                res.send({
+                    status: resposnsCode.INTERNAL_SERVER_ERROR,
+                    message: "Some error occurred while removing from bag" + error,
+                });
+        }
+    }
 }
 
 module.exports = new BookController();
