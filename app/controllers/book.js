@@ -18,6 +18,8 @@ class BookController {
      */
     addBook = (req, res) => {
         try {
+            console.log("request body", req.body.image)
+            console.log("request body", req.body.file)
             const bookData = {
                 author: req.body.author,
                 title: req.body.title,

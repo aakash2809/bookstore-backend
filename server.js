@@ -9,6 +9,7 @@ const userRoute = require('./app/routes/user');
 const bookRoute = require('./app/routes/book');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./app/lib/swagger.json');
+var multer = require('multer');
 
 app.use(cors());
 
