@@ -93,13 +93,13 @@
             "image": "someimage"
         },
         "properToken": {
-            "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaHVyYWh1bEBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJ1c2VySWQiOiI2MDgwYjAxYjA0OTgwMTE2Y2NmNmE1MWEiLCJpYXQiOjE2MTkwNDY2MjksImV4cCI6MTYyMTEyMDIyOX0.jlNPtCAa-zYwF3yemZsV12nlabB4-PT7Z-JxFe4lkss"
+            "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzaGlzaEBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJ1c2VySWQiOiI2MDlhMzc4YTQ5ZTc4NzE3Y2M3NGQzNjUiLCJpYXQiOjE2MjEyMzEwMTksImV4cCI6MTYyMzMwNDYxOX0.FQC4sAF-scFbHw4-e_3Cemb3UkkY3P1xuedzxtvL0Ks"
         },
         "ImproperToken": {
             "token": "'JhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbElkIjoiZ2h1c2FsaWthcnBheWFsQGdtYWlsLmNvbSIsImlkIjoiNjAxOGRiOWM3MzU1YTkyM2I4OGFmM2UwIiwiaWF0IjoxNjEyMzgyMzg3LCJleHAiOjE2MTI0Njg3ODd9.6I8fMEnAS0_PpSMl5ixe0zPWhh0Vpx9QaNFQYShJLjA'"
         },
         "registeredBookId": {
-            "bookId": "6082addef119821fe8760eb9"
+            "bookId": "60a2fe0d2e42741d084e1dc2"
         },
         "improperId": {
             "bookId": "7fc436b4-e163-46a1-ace4-312a89d371"
