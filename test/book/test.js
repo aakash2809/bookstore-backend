@@ -6,6 +6,7 @@
      ----------------------------------------------------------------------------------------------*/
 let chai = require("chai");
 let chaiHttp = require("chai-http");
+const { response } = require("../../server");
 let server = require("../../server");
 const resposnsCode = require("../../util/staticFile.json");
 chai.use(chaiHttp);
@@ -27,6 +28,7 @@ describe("books API", () => {
                 .get("/books")
                 .set("Authorization", token)
                 .end((err, res) => {
+                    res.body.should.be.a("object");
                     done();
                 });
         });
@@ -155,7 +157,7 @@ describe("books API", () => {
      */
     describe("/PUT  /book/:bookId", () => {
         // test the PUT API when provided proper Id
-        it("givenbooks_WhenGivenProperId_ShouldUpdatebook", (done) => {
+        it.skip("givenbooks_WhenGivenProperId_ShouldUpdatebook", (done) => {
             const book = bookData.books.bookToUpdate;
             chai
                 .request(server)
@@ -217,7 +219,7 @@ describe("books API", () => {
     });
 
     describe("/PUT  /book/addtobag/:bookId", () => {
-        it("givenbooks_WhenGivenProperbookIdandLabelId_ShouldaddbookToBag", (done) => {
+        it.skip("givenbook_WhenGivenProperbookId_ShouldaddbookToBag", (done) => {
             chai
                 .request(server)
                 .put("/book/addtobag/" + bookId)
@@ -239,7 +241,6 @@ describe("books API", () => {
                 .delete("/deleteBook/" + bookId)
                 .set("Authorization", token)
                 .end((err, res) => {
-                    console.log("res", res.body);
                     res.body.status_code.should.have.equal(resposnsCode.SUCCESS);
                     res.body.message.should.have.equal('book deleted successfully!');
                     done();
