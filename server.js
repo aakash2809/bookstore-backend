@@ -12,8 +12,10 @@ const swaggerDocument = require('./app/lib/swagger.json');
 var multer = require('multer')
 var upload = multer({ dest: 'uploads/' });
 const logger = require("./config/logger");
+const path = require('path');
 
 app.use(cors());
+app.use(express.static(path.join(__dirname, '../pro/bookstore-frontend/dist')));
 
 // parse requests 
 app.use(express.urlencoded({ extended: true }));
@@ -21,13 +23,15 @@ app.use(express.urlencoded({ extended: true }));
 // parse requests of content-type - application/json 
 app.use(express.json());
 
-
-
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // listen for request
 app.listen(config.port, () => {
   logger.info(`CONNECT_SERVER: Connected, server started listening on port : ${config.port}`);
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../pro/bookstore-frontend/build/index.html'));
 });
 
 new dbconnection(config.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true }).connect();
