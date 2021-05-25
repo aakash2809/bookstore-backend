@@ -1,3 +1,13 @@
+/**
+* @file          server.js
+* @description   This file is an entry point for application 
+* @requires      {@link https://www.npmjs.com/package/swagger-ui-express|swaggerUi}
+* @requires      {@link https://expressjs.com/|express }
+* @requires      route        is a reference to initialize route 
+* @requires      config       is a reference to get connection with configuration
+* @requires      logger       is a reference to save logs in log files
+* @author        Aakash Rajak <aakashrajak2809@gmail.com>
+*-----------------------------------------------------------------------------------------------------*/
 const express = require('express');
 const dbconnection = require('./config/database.config');
 const app = express();
@@ -9,8 +19,6 @@ const userRoute = require('./app/routes/user');
 const bookRoute = require('./app/routes/book');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./app/lib/swagger.json');
-var multer = require('multer')
-var upload = multer({ dest: 'uploads/' });
 const logger = require("./config/logger");
 const path = require('path');
 
