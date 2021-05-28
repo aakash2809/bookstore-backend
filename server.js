@@ -21,6 +21,8 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./app/lib/swagger.json');
 const logger = require("./config/logger");
 const path = require('path');
+const passport = require("passport");
+const { Strategy } = require("passport-facebook");
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../pro/bookstore-frontend/dist')));
@@ -44,8 +46,52 @@ app.get('/', (req, res) => {
 
 new dbconnection(config.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true }).connect();
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function (user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function (obj, cb) {
+  cb(null, obj);
+});
+
+passport.use(new Strategy({
+  clientID: '343119313226188',
+  clientSecret: 'ffc667ae06c3d05a396410c7d8945b90',
+  callbackURL: 'http://localhost:4000/fb/auth',
+  profileFields: ['id', 'displayName']
+},
+  function (accessToken, refreshToken, profile, done) {
+    // if user exist by id
+    // else user ko save krna hai
+    const user = {};
+    done(null, user);
+  }
+))
+
+app.use('/login/fb', passport.authenticate('facebook'));
+
+
+app.use('/failed/login', (req, res, next) => {
+  res.send('login failed');
+});
+
+app.use('/fb/auth', passport.authenticate('facebook',
+  { failureRedirect: '/failed/login' }), function (req, res) {
+    res.send('logged in to facebook');
+  });
+
+app.use('/logout', (req, res, next) => {
+  req.logout();
+  console.log(req.isAuthenticated());
+  res.send('user is logged out');
+})
+
 //Initialize the route
 userRoute.routeToUserController(app);
 bookRoute.routeToUserController(app);
+
 module.exports = app;
 
