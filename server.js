@@ -22,7 +22,8 @@ const swaggerDocument = require('./app/lib/swagger.json');
 const logger = require("./config/logger");
 const path = require('path');
 const passport = require("passport");
-const { Strategy } = require("passport-facebook");
+//const { Strategy } = require("passport-facebook");
+const { Strategy } = require("passport-google-oauth20");
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../pro/bookstore-frontend/dist')));
@@ -57,15 +58,13 @@ passport.deserializeUser(function (obj, cb) {
   cb(null, obj);
 });
 
-passport.use(new Strategy({
-  clientID: '343119313226188',
-  clientSecret: 'ffc667ae06c3d05a396410c7d8945b90',
+/* passport.use(new Strategy({
+  clientID: '324735335703882',
+  clientSecret: 'db21b7c36f0aacfb1f98c5f968411a10',
   callbackURL: 'http://localhost:4000/fb/auth',
   profileFields: ['id', 'displayName']
 },
   function (accessToken, refreshToken, profile, done) {
-    // if user exist by id
-    // else user ko save krna hai
     const user = {};
     done(null, user);
   }
@@ -87,7 +86,37 @@ app.use('/logout', (req, res, next) => {
   req.logout();
   console.log(req.isAuthenticated());
   res.send('user is logged out');
-})
+}) */
+
+passport.use(new Strategy({
+  clientID: '775502779154-lj0udmhe6hm4m4lu90kdjg7h7gpuupim.apps.googleusercontent.com',
+  clientSecret: 'GjnhsoOKx5ivv0p9cPF8ZgBI',
+  callbackURL: 'http://localhost:4000/auth/google/callback'
+},
+  function (accessToken, refreshToken, profile, done) {
+    // if user already exist in your dataabse login otherwise
+    // save data and 
+    console.log("profile", profile);
+    done(null, {});
+  }
+));
+
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/auth/fail' }),
+  (req, res, next) => {
+    console.log(req.user, req.isAuthenticated());
+    res.send('user is logged in');
+  })
+
+app.get('/auth/fail', (req, res, next) => {
+  res.send('user logged in failed');
+});
+
+app.get('/logout', (req, res, next) => {
+  req.logout();
+  res.send('user is logged out');
+});
 
 //Initialize the route
 userRoute.routeToUserController(app);
