@@ -53,7 +53,6 @@ const userSchema = new mongoose.Schema({
 userSchema.set('versionKey', false);
 
 userSchema.pre("save", async function (next) {
-    console.log("pre save", this.password == '');
     if (!(this.password == undefined || this.password == null || this.password == '')) {
         this.password = await bycrypt.hash(this.password, 10);
         this.confirmPassword = undefined;
@@ -122,9 +121,7 @@ class UserModel {
     }
 
     async socialLogin(userData) {
-        console.log("inside services", userData);
         return await User.findOne({ 'email': userData.email }).then(data => {
-            console.log("model result", data);
             if (data !== null) {
                 return data
             } else {
