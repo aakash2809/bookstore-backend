@@ -111,14 +111,12 @@ class UserControllers {
         logger.info(`INVOKING: getEmail method of login services`);
         userServices.getEmail({ email }, (error, result) => {
             try {
-                console.log(result)
                 if (error) {
                     return response.send({
                         success: false,
                         statusCode: resposnsCode.INTERNAL_SERVER_ERROR,
                         message: "internal server error",
                     })
-
                 } else {
                     return response.send({
                         success: true,
@@ -134,6 +132,28 @@ class UserControllers {
         });
     };
 
+    socialLogin(req, res) {
+        let googleProfile = req.user;
+        let googleInfo = {
+            firstName: googleProfile.name.givenName,
+            lastName: googleProfile.name.familyName,
+            email: googleProfile.emails[0].value,
+            password: null,
+            googleId: googleProfile.id,
+        };
+
+        userServices.socialLogin(googleInfo).then((data) => {
+            response.status = true;
+            response.message = 'Login Successfully...!';
+            response.token = data.token;
+            return res.status(200).send(response);
+        }).catch((err) => {
+            response.status = false;
+            response.message = 'Login Failed...!';
+            return res.status(500).send(response);
+        });
+
+    };
 }
 
 module.exports = new UserControllers();

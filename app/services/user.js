@@ -156,6 +156,24 @@ class userServices {
             }
         })
     }
+
+    socialLogin(googleInfo) {
+
+        return new Promise((resolve, reject) => {
+            userModel.socialLogin(googleInfo).then((data) => {
+                let payload = {
+                    '_id': data._id,
+                    'userName': data.email
+                };
+                let token = jwt.sign(payload, process.env.JWT);
+                resolve({ data, token });
+            }).catch((err) => {
+                reject(err);
+            });
+
+        });
+
+    };
 }
 
 module.exports = new userServices

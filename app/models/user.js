@@ -30,7 +30,8 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        default: ""
     },
     confirmPassword: {
         type: String,
@@ -114,6 +115,25 @@ class UserModel {
             (error) ? callback(error, null) : callback(null, user);
         });
     }
+
+    async socialLogin(userData) {
+        console.log("inside services", userData);
+        return userModel.findOne({ 'email': userData.email }).then(data => {
+            if (data !== null) {
+                return data
+            } else {
+                const data = new userModel({
+                    'firstName': userData.firstName,
+                    'lastName': userData.lastName,
+                    'email': userData.userName,
+                });
+                return data.save();
+
+            }
+        }).catch(err => {
+            return ('Something went wrong', err);
+        });
+    };
 }
 
 module.exports = new UserModel;
