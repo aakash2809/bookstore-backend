@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
+
         default: ""
     },
     confirmPassword: {
@@ -53,9 +53,14 @@ const userSchema = new mongoose.Schema({
 userSchema.set('versionKey', false);
 
 userSchema.pre("save", async function (next) {
-    this.password = await bycrypt.hash(this.password, 10);
-    this.confirmPassword = undefined;
-    next();
+    console.log("pre save", this.password == '');
+    if (!(this.password == undefined || this.password == null || this.password == '')) {
+        this.password = await bycrypt.hash(this.password, 10);
+        this.confirmPassword = undefined;
+        next();
+    } else {
+        next();
+    }
 })
 
 logger.info('inside model');
@@ -118,17 +123,17 @@ class UserModel {
 
     async socialLogin(userData) {
         console.log("inside services", userData);
-        return userModel.findOne({ 'email': userData.email }).then(data => {
+        return await User.findOne({ 'email': userData.email }).then(data => {
+            console.log("model result", data);
             if (data !== null) {
                 return data
             } else {
-                const data = new userModel({
+                const data = new User({
                     'firstName': userData.firstName,
                     'lastName': userData.lastName,
-                    'email': userData.userName,
+                    'email': userData.email,
                 });
                 return data.save();
-
             }
         }).catch(err => {
             return ('Something went wrong', err);
