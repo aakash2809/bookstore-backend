@@ -5,8 +5,20 @@ var ejs = require("ejs");
 const logger = require("../../config/logger");
 const bookValidation = require("../middlewares/bookValidation");
 const resposnsCode = require("../../util/staticFile.json");
-
+//var storage;
+//var upload ;
 class Helper {
+
+    /* storage =   multer.diskStorage({
+       destination: function (req, file, callback) {
+         callback(null, './uploads');
+       },
+       filename: function (req, file, callback) {
+         callback(null, file.originalname.substring(0,file.originalname.lastIndexOf('.')) + '-' + Date.now() + file.originalname.substring(file.originalname.lastIndexOf('.'),file.originalname.length));
+       }
+     });
+      upload = multer({ storage : storage}).single('fileUpload'); */
+
     /**
       * @description verify the user to authorized user's role
       * @param {*} req

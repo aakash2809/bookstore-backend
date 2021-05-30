@@ -132,6 +132,7 @@ class UserModel {
                     'firstName': userData.firstName,
                     'lastName': userData.lastName,
                     'email': userData.email,
+                    'role': userData.role,
                 });
                 return data.save();
             }

@@ -134,15 +134,16 @@ class UserControllers {
 
     socialLogin(req, res) {
         let googleProfile = req.user;
+        let response = {};
         let googleInfo = {
             firstName: googleProfile.name.givenName,
             lastName: googleProfile.name.familyName,
             email: googleProfile.emails[0].value,
-            password: null,
-            googleId: googleProfile.id,
+            role: req.role,
         };
 
         userServices.socialLogin(googleInfo).then((data) => {
+            console.log("result data controller", data);
             response.status = true;
             response.message = 'Login Successfully...!';
             response.token = data.token;
