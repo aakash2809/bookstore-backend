@@ -23,6 +23,7 @@ const logger = require("./config/logger");
 const path = require('path');
 const passport = require("passport");
 const { Strategy } = require("passport-google-oauth20");
+const user = require('./app/models/user');
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../pro/bookstore-frontend/dist')));
@@ -57,36 +58,18 @@ passport.deserializeUser(function (obj, cb) {
   cb(null, obj);
 });
 
-/* passport.use(new Strategy({
+passport.use(new Strategy({
   clientID: '775502779154-lj0udmhe6hm4m4lu90kdjg7h7gpuupim.apps.googleusercontent.com',
   clientSecret: 'GjnhsoOKx5ivv0p9cPF8ZgBI',
   callbackURL: 'http://localhost:4000/auth/google/callback'
 },
-  function (accessToken, refreshToken, profile, email, done) {
+  function (accessToken, refreshToken, profile, done) {
     // if user already exist in your dataabse login otherwise
     // save data and 
+    return done(null, profile);
 
-    done(null, {});
   }
 ));
-
-app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
-
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/auth/fail' }),
-  (req, res, next) => {
-
-    console.log("user profile", req);
-    res.send('user is logged in');
-  })
-
-app.get('/auth/fail', (req, res, next) => {
-  res.send('user logged in failed');
-});
-
-app.get('/logout', (req, res, next) => {
-  req.logout();
-  res.send('user is logged out');
-}); */
 
 //Initialize the route
 userRoute.routeToUserController(app);
