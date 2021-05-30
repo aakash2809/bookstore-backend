@@ -22,7 +22,6 @@ const swaggerDocument = require('./app/lib/swagger.json');
 const logger = require("./config/logger");
 const path = require('path');
 const passport = require("passport");
-//const { Strategy } = require("passport-facebook");
 const { Strategy } = require("passport-google-oauth20");
 
 app.use(cors());
@@ -58,7 +57,7 @@ passport.deserializeUser(function (obj, cb) {
   cb(null, obj);
 });
 
-passport.use(new Strategy({
+/* passport.use(new Strategy({
   clientID: '775502779154-lj0udmhe6hm4m4lu90kdjg7h7gpuupim.apps.googleusercontent.com',
   clientSecret: 'GjnhsoOKx5ivv0p9cPF8ZgBI',
   callbackURL: 'http://localhost:4000/auth/google/callback'
@@ -87,7 +86,7 @@ app.get('/auth/fail', (req, res, next) => {
 app.get('/logout', (req, res, next) => {
   req.logout();
   res.send('user is logged out');
-});
+}); */
 
 //Initialize the route
 userRoute.routeToUserController(app);
