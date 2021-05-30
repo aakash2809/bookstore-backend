@@ -58,54 +58,25 @@ passport.deserializeUser(function (obj, cb) {
   cb(null, obj);
 });
 
-/* passport.use(new Strategy({
-  clientID: '324735335703882',
-  clientSecret: 'db21b7c36f0aacfb1f98c5f968411a10',
-  callbackURL: 'http://localhost:4000/fb/auth',
-  profileFields: ['id', 'displayName']
-},
-  function (accessToken, refreshToken, profile, done) {
-    const user = {};
-    done(null, user);
-  }
-))
-
-app.use('/login/fb', passport.authenticate('facebook'));
-
-
-app.use('/failed/login', (req, res, next) => {
-  res.send('login failed');
-});
-
-app.use('/fb/auth', passport.authenticate('facebook',
-  { failureRedirect: '/failed/login' }), function (req, res) {
-    res.send('logged in to facebook');
-  });
-
-app.use('/logout', (req, res, next) => {
-  req.logout();
-  console.log(req.isAuthenticated());
-  res.send('user is logged out');
-}) */
-
 passport.use(new Strategy({
   clientID: '775502779154-lj0udmhe6hm4m4lu90kdjg7h7gpuupim.apps.googleusercontent.com',
   clientSecret: 'GjnhsoOKx5ivv0p9cPF8ZgBI',
   callbackURL: 'http://localhost:4000/auth/google/callback'
 },
-  function (accessToken, refreshToken, profile, done) {
+  function (accessToken, refreshToken, profile, email, done) {
     // if user already exist in your dataabse login otherwise
     // save data and 
-    console.log("profile", profile);
+
     done(null, {});
   }
 ));
 
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
 
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/auth/fail' }),
   (req, res, next) => {
-    console.log(req.user, req.isAuthenticated());
+
+    console.log("user profile", req);
     res.send('user is logged in');
   })
 
