@@ -143,7 +143,6 @@ class UserControllers {
         };
 
         userServices.socialLogin(googleInfo).then((data) => {
-            console.log("result data controller", data);
             response.status = true;
             response.message = 'Login Successfully...!';
             response.token = data.token;
