@@ -1,9 +1,10 @@
 const passport = require("passport");
 const { Strategy } = require("passport-google-oauth20");
+require("dotenv").config();
 
 passport.use(new Strategy({
-    clientID: '775502779154-lj0udmhe6hm4m4lu90kdjg7h7gpuupim.apps.googleusercontent.com',
-    clientSecret: 'GjnhsoOKx5ivv0p9cPF8ZgBI',
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: 'http://localhost:4000/auth/google/callback'
 },
     function (accessToken, refreshToken, profile, done) {
