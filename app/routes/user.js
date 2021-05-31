@@ -1,7 +1,7 @@
 const userControllers = require(`../controllers/user`);
 const helper = require("../middlewares/helper");
 const passport = require("passport");
-const passport2 = require("passport");
+const { authenticateToken } = require('../middlewares/googleAuth');
 
 class UserRoutes {
   routeToUserController = (app) => {
@@ -24,7 +24,7 @@ class UserRoutes {
     //social  user login
     app.get('/googleLogin', passport.authenticate('google', { scope: ['profile', 'email'] }));
     app.get('/auth/google/callback', helper.addRole('user'), passport.authenticate('google', { failureRedirect: '/auth/fail' }),
-      userControllers.socialLogin);
+      authenticateToken, userControllers.socialLogin);
 
     app.get('/auth/fail', (req, res, next) => {
       res.send('user logged in failed');
