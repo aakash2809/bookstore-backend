@@ -6,15 +6,12 @@
 -----------------------------------------------------------------------------------------------*/
 const book = require('../controllers/book.js');
 const helper = require("../middlewares/helper");
-var multer = require('multer')
-var upload = multer({ dest: 'uploads/' })
 
 class BookRoutes {
     routeToUserController = (app) => {
 
-        //add new book , helper.validateBook
-        //app.post('/book', helper.verifyRole, book.addBook);
-        app.post('/book', helper.verifyRole, upload.single('avatar'), book.addBook);
+        //add new book 
+        app.post('/book', helper.validateBook, helper.verifyRole, book.addBook);
 
         //get all books from db
         app.get('/books', book.findAllBooks);
