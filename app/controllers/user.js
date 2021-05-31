@@ -2,26 +2,25 @@
  * @module       controllers
  * @description  controllers is reponsible to accept request and send the response
  *               Controller resolve the error using the service layer by invoking its services
- * @author       Aakash Rajak <aakashrajak2809@gmail.com>      
+ * @author       Aakash Rajak <aakashrajak2809@gmail.com>
 -----------------------------------------------------------------------------------------------*/
 
-const logger = require("../../config/logger");
-const userServices = require("../services/user");
-const userValidator = require("../middlewares/userValidation");
-const resposnsCode = require("../../util/staticFile.json");
+const logger = require('../../config/logger');
+const userServices = require('../services/user');
+const userValidator = require('../middlewares/userValidation');
+const resposnsCode = require('../../util/staticFile.json');
 
 class UserControllers {
-
     /**
    * @description add user to database
    * @param {*} request in json formate
    * @param {*} response sends response from server
    */
     register = (request, response) => {
-        logger.info(`TRACKED_PATH: Inside controller`);
-        let validatedRequestResult = userValidator.validate(request.body);
+        logger.info('TRACKED_PATH: Inside controller');
+        const validatedRequestResult = userValidator.validate(request.body);
         if (validatedRequestResult.error) {
-            logger.error(`SCHEMAERROR: Request did not match with schema`);
+            logger.error('SCHEMAERROR: Request did not match with schema');
             response.send({
                 success: false,
                 status_code: resposnsCode.BAD_REQUEST,
@@ -42,12 +41,12 @@ class UserControllers {
             response.send({
                 success: false,
                 status_code: resposnsCode.BAD_REQUEST,
-                message: "password does not match with confirm password",
+                message: 'password does not match with confirm password',
             });
             return;
         }
 
-        logger.info(`INVOKING: registerUser method of services`);
+        logger.info('INVOKING: registerUser method of services');
         userServices.registerUser(
             registrationDetails,
             (error, registrationResult) => {
@@ -62,8 +61,8 @@ class UserControllers {
                         status_code: registrationResult.statusCode,
                         message: registrationResult.message,
                     });
-                logger.info("SUCCESS001: User registered successfully");
-            }
+                logger.info('SUCCESS001: User registered successfully');
+            },
         );
     };
 
@@ -73,13 +72,13 @@ class UserControllers {
        * @param {*} response
        */
     login = (request, response) => {
-        logger.info(`TRACKED_PATH: Inside controller`);
+        logger.info('TRACKED_PATH: Inside controller');
         const loginDetails = {
             email: request.body.email,
             password: request.body.password,
         };
         logger.info(
-            `INVOKING: getLoginCredentialAndCallForValidation method of login services`
+            'INVOKING: getLoginCredentialAndCallForValidation method of login services',
         );
         userServices.validateAndLogin(
             loginDetails,
@@ -95,10 +94,10 @@ class UserControllers {
                         statusCode: loginResult.statusCode,
                         message: loginResult.message,
                         token: loginResult.data,
-                        user: loginResult.user
+                        user: loginResult.user,
                     });
-            }
-        )
+            },
+        );
     };
 
     /**
@@ -108,34 +107,32 @@ class UserControllers {
    */
     forgotPassword = (request, response) => {
         const { email } = request.body;
-        logger.info(`INVOKING: getEmail method of login services`);
+        logger.info('INVOKING: getEmail method of login services');
         userServices.getEmail({ email }, (error, result) => {
             try {
                 if (error) {
                     return response.send({
                         success: false,
                         statusCode: resposnsCode.INTERNAL_SERVER_ERROR,
-                        message: "internal server error",
-                    })
-                } else {
-                    return response.send({
-                        success: true,
-                        statusCode: result.status,
-                        message: result.message,
-                        data: result.data,
-                    })
+                        message: 'internal server error',
+                    });
                 }
+                return response.send({
+                    success: true,
+                    statusCode: result.status,
+                    message: result.message,
+                    data: result.data,
+                });
             } catch (error) {
                 return error;
             }
-
         });
     };
 
     socialLogin(req, res) {
-        let googleProfile = req.user.profile;
-        let response = {};
-        let googleInfo = {
+        const googleProfile = req.user.profile;
+        const response = {};
+        const googleInfo = {
             firstName: googleProfile.name.givenName,
             lastName: googleProfile.name.familyName,
             email: googleProfile.emails[0].value,
@@ -144,7 +141,7 @@ class UserControllers {
             googleLogin: true,
         };
 
-        userServices.socialLogin(googleInfo).then((data) => {
+        userServices.loginWithGoogleAccount(googleInfo).then((data) => {
             response.status = true;
             response.message = 'Login Successfully...!';
             response.token = data.token;
@@ -154,8 +151,7 @@ class UserControllers {
             response.message = 'Login Failed...!';
             return res.status(500).send(response);
         });
-
-    };
+    }
 }
 
 module.exports = new UserControllers();

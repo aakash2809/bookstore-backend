@@ -5,7 +5,7 @@
  * @author       Aakash Rajak <aakashrajak2809@gmail.com>
 -----------------------------------------------------------------------------------------------*/
 
-const mongoose = require(`mongoose`);
+const mongoose = require('mongoose');
 
 const bookSchema = new mongoose.Schema(
     {
@@ -23,8 +23,8 @@ const bookSchema = new mongoose.Schema(
             unique: true,
             validate: {
                 validator: Number.isInteger,
-                message: '{VALUE} is not an integer value'
-            }
+                message: '{VALUE} is not an integer value',
+            },
         },
         price: {
             type: Number,
@@ -40,7 +40,7 @@ const bookSchema = new mongoose.Schema(
         },
         adminId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+            ref: 'User',
         },
         isAddedToBag: {
             type: Boolean,
@@ -49,25 +49,23 @@ const bookSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-    }
+    },
 );
 
-bookSchema.set("versionKey", false);
+bookSchema.set('versionKey', false);
 
-const Book = mongoose.model(`Book`, bookSchema);
+const Book = mongoose.model('Book', bookSchema);
 
 class BookModel {
-
     /**
      * @description saving book into buckets
-     * @param {*} bookData holds user input data 
+     * @param {*} bookData holds user input data
      * @param {*} callback is for service class method
      */
     save = async (bookData, callback) => {
         const book = new Book(bookData);
         await book.save((error, bookResult) => {
             error ? callback(error, null) : callback(null, bookResult);
-
         });
     }
 
@@ -78,31 +76,30 @@ class BookModel {
     getBooks = async (callback) => {
         await Book.find({}, (error, noteData) => {
             error ? callback(error, null) : callback(null, noteData);
-        })
-
+        });
     }
 
     /**
-     * @description update a book 
-     * @param {*} bookData 
-     * @param {*} callback 
+     * @description update a book
+     * @param {*} bookData
+     * @param {*} callback
      */
     update = async (bookData, callback) => {
-        let bookId = bookData.bookId;
+        const { bookId } = bookData;
         await Book.findByIdAndUpdate(
             bookId,
             bookData,
             { new: true },
             (error, noteResult) => {
                 error ? callback(error, null) : callback(null, noteResult);
-            }
+            },
         );
     }
 
     /**
-     * @description delete a book 
-     * @param {*} bookData 
-     * @param {*} callback 
+     * @description delete a book
+     * @param {*} bookData
+     * @param {*} callback
      * @returns data of remove method
      */
     delete = (bookData, callback) => {
@@ -113,23 +110,19 @@ class BookModel {
 
     /**
      * @description add a book to bag by making isAddedToBag flag to true
-     * @param {*} userData 
+     * @param {*} userData
      */
-    addToBag = async (userData) => {
-        return await Book.findByIdAndUpdate(
+    addToBag = async (userData) => await Book.findByIdAndUpdate(
             userData.bookId, { isAddedToBag: true }, { new: true },
-        );
-    }
+        )
 
     /**
    * @description add a book to bag by making isAddedToBag flag to false
-   * @param {*} userData 
+   * @param {*} userData
    */
-    removeFromBag = async (userData) => {
-        return await Book.findByIdAndUpdate(
+    removeFromBag = async (userData) => await Book.findByIdAndUpdate(
             userData.bookId, { isAddedToBag: false }, { new: true },
-        );
-    }
+        )
 }
 
 module.exports = new BookModel();

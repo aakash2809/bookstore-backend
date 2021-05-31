@@ -1,14 +1,13 @@
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
-var nodemailer = require("nodemailer");
-var ejs = require("ejs");
-const logger = require("../../config/logger");
-const bookValidation = require("../middlewares/bookValidation");
-const resposnsCode = require("../../util/staticFile.json");
-//var storage;
-//var upload ;
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const nodemailer = require('nodemailer');
+const ejs = require('ejs');
+const logger = require('../../config/logger');
+const bookValidation = require('./bookValidation');
+const resposnsCode = require('../../util/staticFile.json');
+// var storage;
+// var upload ;
 class Helper {
-
     /* storage =   multer.diskStorage({
        destination: function (req, file, callback) {
          callback(null, './uploads');
@@ -25,59 +24,54 @@ class Helper {
       * @param {*} res
       * @param {*} next
       */
-    addRole = (role) => {
-        return (req, res, next) => {
-            req.role = role;
-            next();
-        }
+    addRole = (role) => (req, res, next) => {
+        req.role = role;
+        next();
     };
 
     /**
      * @description it genrate the token
      */
-    genrateToken = (user) => {
-        return jwt.sign(
-            {
-                email: user[0].email,
-                role: user[0].role,
-                userId: user[0]._id,
-            },
-            process.env.SECRET_KEY,
-            {
-                expiresIn: "24d",
-            }
-        );
-    };
+    genrateToken = (user) => jwt.sign(
+        {
+            email: user[0].email,
+            role: user[0].role,
+            userId: user[0]._id,
+        },
+        process.env.SECRET_KEY,
+        {
+            expiresIn: '24d',
+        },
+    );
 
     validateBook = (request, response, next) => {
-        let validatedRequestResult = bookValidation.validate(request.body);
+        const validatedRequestResult = bookValidation.validate(request.body);
         if (validatedRequestResult.error) {
-            logger.error(`SCHEMAERROR: Request did not match with schema`);
+            logger.error('SCHEMAERROR: Request did not match with schema');
             response.send({
                 success: false,
                 status_code: resposnsCode.BAD_REQUEST,
                 message: validatedRequestResult.error.details[0].message,
             });
-            return;
         } else {
             return next();
         }
     }
 
     /**
-      * @description verify user role 
+      * @description verify user role
       * @param {*} req takes token from header
-      * @param {*} res sends response 
-      * @param {*} next 
+      * @param {*} res sends response
+      * @param {*} next
       */
     verifyRole = (req, res, next) => {
         try {
-            const token = req.headers.authorization.split(" ")[1];
+            const token = req.headers.authorization.split(' ')[1];
             if (token === undefined) {
                 logger.error('Incorrect token or token is expired');
                 return res.status(401).send({
                     success: false,
-                    message: 'Incorrect token or token is expired'
+                    message: 'Incorrect token or token is expired',
                 });
             }
             return jwt.verify(token, process.env.SECRET_KEY, (error, decodeData) => {
@@ -86,13 +80,13 @@ class Helper {
                     return res.status(401).send({
                         success: false,
                         message: 'Incorrect token or token is expiredd ',
-                        error
+                        error,
                     });
-                } else if (decodeData.role != 'admin') {
+                } if (decodeData.role != 'admin') {
                     logger.error('Authorization failed');
                     return res.status(401).send({
                         success: false,
-                        message: 'Authorization failed'
+                        message: 'Authorization failed',
                     });
                 }
                 req.decodeData = decodeData;
@@ -101,25 +95,25 @@ class Helper {
         } catch (error) {
             return res.status(401).send({
                 success: false,
-                message: 'some error occured ' + error
+                message: `some error occured ${error}`,
             });
         }
     }
 
     /**
      * @description verify token authenticates user
-     * @param {*} req 
-     * @param {*} res 
-     * @param {*} next 
+     * @param {*} req
+     * @param {*} res
+     * @param {*} next
      */
     verifyToken = (req, res, next) => {
         try {
-            const token = req.headers.authorization.split(" ")[1];
+            const token = req.headers.authorization.split(' ')[1];
             if (token === undefined) {
                 logger.error('Incorrect token or token is expired');
                 return res.status(401).send({
                     success: false,
-                    message: 'Incorrect token or token is expired'
+                    message: 'Incorrect token or token is expired',
                 });
             }
             return jwt.verify(token, process.env.SECRET_KEY, (error, decodeData) => {
@@ -127,7 +121,7 @@ class Helper {
                     logger.error('Incorrect token or token is expired');
                     return res.status(401).send({
                         success: false,
-                        message: 'Incorrect token or token is expired'
+                        message: 'Incorrect token or token is expired',
                     });
                 }
                 req.decodeData = decodeData;
@@ -136,17 +130,17 @@ class Helper {
         } catch (error) {
             return res.status(401).send({
                 success: false,
-                message: error
+                message: error,
             });
         }
     }
 
     /*
-     * @description this function sending mail for reset password 
+     * @description this function sending mail for reset password
      */
     sendMailToResetPassword = async (user, token, callback) => {
-        var transporter = nodemailer.createTransport({
-            service: "gmail",
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
             port: process.env.PORT,
             secure: true,
             auth: {
@@ -155,18 +149,19 @@ class Helper {
             },
         });
         await ejs.renderFile(
-            "app/views/forgotPassword.ejs",
+            'app/views/forgotPassword.ejs',
             {
                 name: user.firstName,
                 resetLink: `${process.env.CLIENT_URL}/resetpassword/${token}`,
             },
             (err, data) => {
                 if (err) {
+
                 } else {
-                    var mainOptions = {
+                    const mainOptions = {
                         from: process.env.EMAIL_USER,
                         to: user.email,
-                        subject: "Reset Password",
+                        subject: 'Reset Password',
                         html: data,
                     };
                     transporter.sendMail(mainOptions, (error, mailInfo) => {
@@ -178,7 +173,7 @@ class Helper {
                         }
                     });
                 }
-            }
+            },
         );
     };
 }

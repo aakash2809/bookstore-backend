@@ -1,22 +1,21 @@
-const winston = require("winston");
+const winston = require('winston');
 
 /**
  * @exports : Exports developement Config Environment based Configuration
  *
  */
-module.exports = () => {
-    return {
+module.exports = () => ({
         port: process.env.PROD_PORT,
         logger: winston.createLogger({
             format: winston.format.json(),
             transports: [
                 new winston.transports.File({
-                    filename: "./logs/error.log",
-                    level: "error",
+                    filename: './logs/error.log',
+                    level: 'error',
                 }),
                 new winston.transports.File({
-                    filename: "./logs/info.log",
-                    level: "info",
+                    filename: './logs/info.log',
+                    level: 'info',
                 }),
             ],
         }),
@@ -25,5 +24,4 @@ module.exports = () => {
             port: process.env.REDIS_PORT,
             flushRedisOnServerRestart: true,
         },
-    };
-};
+    });

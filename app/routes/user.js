@@ -1,16 +1,15 @@
-const userControllers = require(`../controllers/user`);
-const helper = require("../middlewares/helper");
-const passport = require("passport");
+const passport = require('passport');
+const userControllers = require('../controllers/user');
+const helper = require('../middlewares/helper');
 const { authenticateToken } = require('../middlewares/googleAuth');
 
 class UserRoutes {
   routeToUserController = (app) => {
+    // register a new user
+    app.post('/userRegister', helper.addRole('user'), userControllers.register);
 
     // register a new user
-    app.post("/userRegister", helper.addRole('user'), userControllers.register);
-
-    // register a new user
-    app.post("/adminRegister", helper.addRole('admin'), userControllers.register);
+    app.post('/adminRegister', helper.addRole('admin'), userControllers.register);
 
     // user login
     app.post('/userLogin', userControllers.login);
@@ -18,10 +17,10 @@ class UserRoutes {
     // admin login
     app.post('/adminLogin', userControllers.login);
 
-    //forgot password
-    app.post("/forgotPassword", userControllers.forgotPassword);
+    // forgot password
+    app.post('/forgotPassword', userControllers.forgotPassword);
 
-    //social  user login
+    // social  user login
     app.get('/googleLogin', passport.authenticate('google', { scope: ['profile', 'email'] }));
     app.get('/auth/google/callback', helper.addRole('user'), passport.authenticate('google', { failureRedirect: '/auth/fail' }),
       authenticateToken, userControllers.socialLogin);

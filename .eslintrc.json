@@ -11,11 +11,36 @@
     "parserOptions": {
         "ecmaVersion": 12
     },
+    "parser": "babel-eslint",
     "rules": {
-        "eslint no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1 }],
-        "eslint import/newline-after-import": "off",
-        "linebreak-style": 0 ,
-        "eslint no-console": "allow",
-        "parser": "babel-eslint"  
+        "global-require": "off",
+        "no-shadow": "off",
+        "func-names": "off",
+        "eqeqeq": "off",
+        "consistent-return": "off",
+        "max-len": "off",
+        "no-param-reassign": "off",
+        "no-underscore-dangle": "off",
+        "no-unused-expressions": "off",
+        "class-methods-use-this": "off",
+        "no-sequences": "off",
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-mixed-spaces-and-tabs": "error",
+        "no-unused-vars": [
+            "error",
+            {
+                "vars": "all",
+                "args": "none"
+            }
+        ],
+        "template-curly-spacing": "off",
+        "indent": "off"
     }
 }

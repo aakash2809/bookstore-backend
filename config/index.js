@@ -1,4 +1,4 @@
-require("dotenv").config();
+require('dotenv').config();
 
 let config;
 
@@ -6,25 +6,21 @@ let config;
  * @description It return true if the current system is production
  * @param {*} config
  */
-const isProduction = (config) => {
-        return config.name == "production";
-};
+const isProduction = (config) => config.name == 'production';
 
 /**
  * @description It return true if the current system is development
  * @param {*} config
  */
-const isDevelopement = (config) => {
-        return config.name == "development";
-};
+const isDevelopement = (config) => config.name == 'development';
 
 // Combine all the require config files.
 const envConfig = {
         production() {
-                return require("./production")(config);
+                return require('./production')(config);
         },
         development() {
-                return require("./development")(config);
+                return require('./development')(config);
         },
 };
 
@@ -46,7 +42,7 @@ module.exports = {
         /**
          * @description Setting the site configuration. Loading of the server starts here.
          * @function {function} attach will wrap all configuration environment specific data,
-         * 			Domain URL, Redis, Mailer, AWS & logger
+         * Domain URL, Redis, Mailer, AWS & logger
          * @param {string} env Environment will state the environment to laod e.g.
          * for production server it will be `production`
          */
@@ -61,17 +57,16 @@ module.exports = {
                  * @description loading the Environment configuration.
                  * @const{string} _app Express application instance
                  */
-                _app
+                _app,
         ) => {
                 if (config == null) {
                         /**
                          * @description loading the Environment configuration if env varialble is set
                          * otherwise load the local configuration.
                          */
-                        this.config =
-                                typeof envConfig[env] !== "undefined"
-                                        ? envConfig[env]()
-                                        : envConfig.local();
+                        this.config = typeof envConfig[env] !== 'undefined'
+                                ? envConfig[env]()
+                                : envConfig.local();
 
                         /**
                          * @description Express application instance.
@@ -96,7 +91,7 @@ module.exports = {
                         /**
                          * @description Environment name `ename`, Setting the ename will know which environment is loaded.
                          */
-                        this.ename = this.config.name ? this.config.name : "";
+                        this.ename = this.config.name ? this.config.name : '';
 
                         /**
                          * @description Static content through-out the site.
