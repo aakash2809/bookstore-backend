@@ -30,7 +30,6 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-
         default: ""
     },
     confirmPassword: {
@@ -39,7 +38,9 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         default: ""
-    }
+    },
+    googleLogin: { type: Boolean },
+    googleId: { type: String },
 },
     {
         timestamps: true,
@@ -130,6 +131,8 @@ class UserModel {
                     'lastName': userData.lastName,
                     'email': userData.email,
                     'role': userData.role,
+                    'googleId': userData.googleId,
+                    'googleLogin': userData.googleLogin,
                 });
                 return data.save();
             }

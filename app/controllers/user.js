@@ -133,13 +133,15 @@ class UserControllers {
     };
 
     socialLogin(req, res) {
-        let googleProfile = req.user;
+        let googleProfile = req.user.profile;
         let response = {};
         let googleInfo = {
             firstName: googleProfile.name.givenName,
             lastName: googleProfile.name.familyName,
             email: googleProfile.emails[0].value,
             role: req.role,
+            googleId: googleProfile.id,
+            googleLogin: true,
         };
 
         userServices.socialLogin(googleInfo).then((data) => {
