@@ -8,6 +8,11 @@ passport.use(new Strategy({
     callbackURL: 'http://localhost:4000/auth/google/callback'
 },
     function (accessToken, refreshToken, profile, done) {
-        return done(null, profile);
+        const userDetails = {
+            profile,
+            token: accessToken,
+        };
+        console.log(profile);
+        return done(null, userDetails);
     }
 ));
