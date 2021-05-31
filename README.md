@@ -18,4 +18,4 @@ Go to http://localhost:4000/. If port 4000 is already in use on your machine, th
 you can replace the port in your .env file
 
 Author
-[Aakash Rajak] (https://github.com/aakash2809/fundoo-notes.git)
+[Aakash Rajak] (https://github.com/aakash2809/bookstore-backend.git)
