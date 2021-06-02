@@ -129,28 +129,28 @@ class UserControllers {
         });
     };
 
-    socialLogin(req, res) {
-        const googleProfile = req.user.profile;
-        const response = {};
-        const googleInfo = {
-            firstName: googleProfile.name.givenName,
-            lastName: googleProfile.name.familyName,
-            email: googleProfile.emails[0].value,
-            role: req.role,
-            googleId: googleProfile.id,
-            googleLogin: true,
-        };
-
-        userServices.loginWithGoogleAccount(googleInfo).then((data) => {
+    socialLogin = async (req, res) => {
+        try {
+            const googleProfile = req.user.profile;
+            const response = {};
+            const googleInfo = {
+                firstName: googleProfile.name.givenName,
+                lastName: googleProfile.name.familyName,
+                email: googleProfile.emails[0].value,
+                role: req.role,
+                googleId: googleProfile.id,
+                googleLogin: true,
+            };
+            const result = await userServices.loginWithGoogleAccount(googleInfo);
             response.status = true;
             response.message = 'Login Successfully...!';
-            response.token = data.token;
+            response.token = result.token;
             return res.status(200).send(response);
-        }).catch((err) => {
+        } catch (error) {
             response.status = false;
             response.message = 'Login Failed...!';
             return res.status(500).send(response);
-        });
+        }
     }
 }
 
