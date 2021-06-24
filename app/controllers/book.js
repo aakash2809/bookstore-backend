@@ -273,7 +273,7 @@ class BookController {
     */
     findAllBooksByRange = async (req, res) => {
         try {
-            const validatedRequestResult = inputValidator.validateSearchTitle(req.query);
+            const validatedRequestResult = inputValidator.validateCostRangeInput(req.query);
             if (validatedRequestResult.error) {
                 logger.error('SCHEMAERROR: Request did not match with schema');
                 res.send({
