@@ -113,16 +113,31 @@ class BookModel {
      * @param {*} userData
      */
     addToBag = async (userData) => await Book.findByIdAndUpdate(
-            userData.bookId, { isAddedToBag: true }, { new: true },
-        )
+        userData.bookId, { isAddedToBag: true }, { new: true },
+    )
 
     /**
    * @description add a book to bag by making isAddedToBag flag to false
    * @param {*} userData
    */
     removeFromBag = async (userData) => await Book.findByIdAndUpdate(
-            userData.bookId, { isAddedToBag: false }, { new: true },
-        )
+        userData.bookId, { isAddedToBag: false }, { new: true },
+    )
+
+    /**
+      * @description retrive all note data from database in between given range
+      *@param {*} booksCostRange contain minimum and maximum range
+      */
+    filterBooks = async (booksCostRange) => {
+        try {
+            let minPrice = booksCostRange.minCost;
+            let maxPrice = booksCostRange.maxCost;
+            const result = await Book.find({ price: { $lte: maxPrice, $gte: minPrice } }).count();
+            return result;
+        } catch (error) {
+            return error;
+        }
+    };
 }
 
 module.exports = new BookModel();

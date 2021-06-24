@@ -16,8 +16,8 @@ class Bookservice {
      * @returns callback function
      */
     addBook = async (bookData) => await bookModel.save(bookData, (error, data) => {
-            (error) || data;
-        })
+        (error) || data;
+    })
 
     /**
      * @description add new book to bookstore
@@ -64,6 +64,18 @@ class Bookservice {
         const data = await bookModel.removeFromBag(bookData);
         return data;
     }
+
+    /**
+     * @description call the method of note model and serve response to controller
+     * @param {*} booksCostRange contains the min and max value of range by filteration has to be done
+    */
+    findBooks = (booksCostRange) => new Promise((resolve, reject) => {
+        bookModel.filterBooks(booksCostRange).then((result) => {
+            resolve(result);
+        }).catch((err) => {
+            reject(err);
+        });
+    });
 }
 
 module.exports = new Bookservice();

@@ -8,6 +8,7 @@
 const bookService = require('../services/book.js');
 const resposnsCode = require('../../util/staticFile.json');
 const logger = require('../../config/logger');
+const inputValidator = require('../middlewares/inputValiation');
 
 class BookController {
     /**
@@ -260,6 +261,55 @@ class BookController {
             res.send({
                 status: resposnsCode.INTERNAL_SERVER_ERROR,
                 message: `Some error occurred while removing from bag${error}`,
+            });
+        }
+    }
+
+    /**
+    * @description this funtion takes input const range for book filteration
+    * and sends response accordingly
+    * @param {*} req contains the min and max value of range by filteration has to be done
+    * @param {*} res sends response from server
+    */
+    findAllBooksByRange = async (req, res) => {
+        try {
+            const validatedRequestResult = inputValidator.validateSearchTitle(req.query);
+            if (validatedRequestResult.error) {
+                logger.error('SCHEMAERROR: Request did not match with schema');
+                res.send({
+                    success: false,
+                    status_code: resposnsCode.BAD_REQUEST,
+                    message: validatedRequestResult.error.details[0].message,
+                });
+                return;
+            }
+
+            let booksCostRange = {
+                minCost: Number(req.query.min),
+                maxCost: Number(req.query.max),
+            };
+            let filteredResult = await bookService.findBooks(booksCostRange);
+            if (filteredResult == 0) {
+                logger.error('no book available between this cost range');
+                return res.status(404).send({
+                    success: false,
+                    message: 'no book available between this cost range',
+                    data: { range: `${booksCostRange.minCost}-${booksCostRange.maxCost}`, numberOfBooks: `${filteredResult}` },
+                });
+            } else {
+                logger.info('books found');
+                return res.status(200).send({
+                    success: true,
+                    message: 'books found',
+                    data: { range: `${booksCostRange.minCost}-${booksCostRange.maxCost}`, numberOfBooks: `${filteredResult}` },
+                });
+            }
+        } catch (error) {
+            logger.error('there is some error to filter books...', error);
+            return res.status(500).send({
+                status: false,
+                message: 'there is some error to filter books....',
+                error,
             });
         }
     }
