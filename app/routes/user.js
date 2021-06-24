@@ -25,7 +25,8 @@ class UserRoutes {
     app.get('/auth/google/callback', helper.addRole('user'), passport.authenticate('google', { failureRedirect: '/auth/fail' }),
       authenticateToken, userControllers.socialLogin);
 
-    app.get('/auth/fail', (req, res, next) => {
+    app.get('/auth/fail', (req, res) => {
+      console.log('loggged fail');
       res.send('user logged in failed');
     });
 

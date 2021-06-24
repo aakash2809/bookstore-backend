@@ -13,26 +13,7 @@
     },
     "parser": "babel-eslint",
     "rules": {
-        "global-require": "off",
-        "no-shadow": "off",
-        "func-names": "off",
-        "eqeqeq": "off",
-        "consistent-return": "off",
         "max-len": "off",
-        "no-param-reassign": "off",
-        "no-underscore-dangle": "off",
-        "no-unused-expressions": "off",
-        "class-methods-use-this": "off",
-        "no-sequences": "off",
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "no-mixed-spaces-and-tabs": "error",
         "no-unused-vars": [
             "error",
             {
@@ -40,7 +21,25 @@
                 "args": "none"
             }
         ],
+        "no-console": "error",
+        "no-unused-expressions": "off",
+        "no-param-reassign": "off",
+        "linebreak-style": 0,
+        "consistent-return": "off",
+        "no-sequences": "off",
+        "no-underscore-dangle": "off",
+        "no-return-assign": "off",
+        "no-plusplus": "off",
+        "indent": "off",
+        "global-require": "off",
+        "no-shadow": "off",
+        "func-names": "off",
+        "eqeqeq": "off",
+        "prefer-const": "off",
+        "eslintno-else-return": "off",
+        "no-else-return": "off",
+        "arrow-body-style": "off",
         "template-curly-spacing": "off",
-        "indent": "off"
+        "class-methods-use-this": "off"
     }
 }

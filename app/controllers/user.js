@@ -147,6 +147,7 @@ class UserControllers {
             response.token = result.token;
             return res.status(200).send(response);
         } catch (error) {
+            let response = '';
             response.status = false;
             response.message = 'Login Failed...!';
             return res.status(500).send(response);
