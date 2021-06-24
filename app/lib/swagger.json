@@ -405,6 +405,59 @@
                 ],
                 "deprecated": false
             }
+        },
+        "/books/filter/byRange": {
+            "get": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "number of books in cost range",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "min",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "required": true,
+                        "description": "minimum cost of books."
+                    },
+                    {
+                        "in": "query",
+                        "name": "max",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "required": true,
+                        "description": "maximum cost of books."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "books found"
+                    },
+                    "404": {
+                        "description": "there is no book available in given range"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "deprecated": false
+            }
         }
     },
     "securityDefinitions": {
