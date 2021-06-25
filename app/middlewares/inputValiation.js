@@ -13,10 +13,11 @@ class Validator {
     * @param booksCostRange  having all search detail which is to be validated
     */
   validateCostRangeInput = (booksCostRange) => {
-    const booksCostRangeInputRules = joi.object({
-      min: joi.number().required(),
-      max: joi.number().required(),
-    });
+    const booksCostRangeInputRules = joi.array()
+      .items({
+        min: joi.number().required(),
+        max: joi.number().required(),
+      });
     return booksCostRangeInputRules.validate(booksCostRange);
   }
 }

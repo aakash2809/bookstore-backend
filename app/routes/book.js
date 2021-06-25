@@ -28,7 +28,7 @@ class BookRoutes {
         app.put('/book/removeFromBag/:bookId', helper.verifyToken, book.removeFromBag);
 
         // get all books from db in given range
-        app.get('/books/filter/byRange', book.findAllBooksByRange);
+        app.post('/books/filter/byRange', book.findAllBooksByRange);
     };
 }
 

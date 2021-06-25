@@ -130,8 +130,8 @@ class BookModel {
       */
     filterBooks = async (booksCostRange) => {
         try {
-            let minPrice = booksCostRange.minCost;
-            let maxPrice = booksCostRange.maxCost;
+            let minPrice = booksCostRange.min;
+            let maxPrice = booksCostRange.max;
             const result = await Book.find({ price: { $lte: maxPrice, $gte: minPrice } }).count();
             return result;
         } catch (error) {

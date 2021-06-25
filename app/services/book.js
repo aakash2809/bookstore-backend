@@ -69,13 +69,20 @@ class Bookservice {
      * @description call the method of note model and serve response to controller
      * @param {*} booksCostRange contains the min and max value of range by filteration has to be done
     */
-    findBooks = (booksCostRange) => new Promise((resolve, reject) => {
-        bookModel.filterBooks(booksCostRange).then((result) => {
-            resolve(result);
-        }).catch((err) => {
-            reject(err);
-        });
-    });
+    findBooks = async (booksCostRange) => {
+        try {
+            let result = [];
+            for (let i = 0; i < booksCostRange.length; i++) {
+                let booksInRange = { range: '', numberOfBooks: '' };
+                booksInRange.range = `${booksCostRange[i].min}-${booksCostRange[i].max}`;
+                booksInRange.numberOfBooks = await bookModel.filterBooks(booksCostRange[i]);
+                result[i] = booksInRange;
+            }
+            return result;
+        } catch (error) {
+            return error;
+        }
+    };
 }
 
 module.exports = new Bookservice();
