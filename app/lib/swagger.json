@@ -407,11 +407,11 @@
             }
         },
         "/books/filter/byRange": {
-            "get": {
+            "post": {
                 "tags": [
                     "Book"
                 ],
-                "summary": "number of books in cost range",
+                "summary": "number of books in given cost ranges",
                 "consumes": [
                     "application/json"
                 ],
@@ -420,24 +420,13 @@
                 ],
                 "parameters": [
                     {
-                        "in": "query",
-                        "name": "min",
-                        "schema": {
-                            "type": "integer",
-                            "minimum": 1
-                        },
+                        "in": "body",
+                        "name": "Book",
+                        "description": "book object",
                         "required": true,
-                        "description": "minimum cost of books."
-                    },
-                    {
-                        "in": "query",
-                        "name": "max",
                         "schema": {
-                            "type": "integer",
-                            "minimum": 1
-                        },
-                        "required": true,
-                        "description": "maximum cost of books."
+                            "$ref": "#/definitions/Book"
+                        }
                     }
                 ],
                 "responses": {
