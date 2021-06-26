@@ -138,6 +138,24 @@ class BookModel {
             return error;
         }
     };
+
+    /**
+      * @description this uses aggregate function to find number of books and
+      *  titles and author name
+      */
+    findBooksCountByAuthor = async () => {
+        try {
+            const result = await Book.aggregate([
+                {
+                    $group: { _id: '$author', Books: { $push: '$title' }, Count: { $sum: 1 } }
+                },
+                { $project: { Owner: '$_id', Books: '$Books', Count: '$Count', _id: 0 } }
+            ]);
+            return result;
+        } catch (error) {
+            return error;
+        }
+    };
 }
 
 module.exports = new BookModel();

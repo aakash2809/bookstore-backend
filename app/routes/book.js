@@ -29,6 +29,9 @@ class BookRoutes {
 
         // get all books from db in given range
         app.post('/books/filter/byRange', book.findAllBooksByRange);
+
+        // get all books title and books count with same author, from db
+        app.get('/books/filter/byAuthor', book.findAllBooksCountByAuthor);
     };
 }
 

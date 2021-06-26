@@ -303,6 +303,30 @@ class BookController {
             });
         }
     }
+
+    /**
+      * @description this function will return reponse books authors name with
+      * titles and there counts with currosponding author
+      * @param {*} res sends response from server
+      */
+    findAllBooksCountByAuthor = async (req, res) => {
+        try {
+            let filteredResult = await bookService.findBooksCountByAuthor();
+            logger.info('books found');
+            return res.status(200).send({
+                success: true,
+                message: 'books found',
+                data: filteredResult,
+            });
+        } catch (error) {
+            logger.error('there is some error to filter books...', error);
+            return res.status(500).send({
+                status: false,
+                message: 'there is some error to filter books....',
+                error,
+            });
+        }
+    }
 }
 
 module.exports = new BookController();

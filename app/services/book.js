@@ -82,7 +82,20 @@ class Bookservice {
         } catch (error) {
             return error;
         }
-    };
+    }
+
+    /**
+      * @description call the method of note model and serve response to controller
+     */
+    findBooksCountByAuthor = async () => {
+        try {
+            let result = [];
+            result = await bookModel.findBooksCountByAuthor();
+            return result;
+        } catch (error) {
+            return error;
+        }
+    }
 }
 
 module.exports = new Bookservice();
