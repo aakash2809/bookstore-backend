@@ -150,6 +150,56 @@ describe("books API", () => {
                     done();
                 });
         });
+
+        it.only("whenGivenProperEndPoints_shouldReturn_objectAndSuccessTrue", (done) => {
+            chai
+                .request(server)
+                .post("/books/filter/byRange")
+                .send(bookData.books.booksCostRanges)
+                .end((err, res) => {
+                    res.body.should.be.a("object");
+                    res.body.success.should.have.equal(true);
+                    done();
+                });
+        });
+
+        it.only("WhenGivenRangeMinValueMissing_shouldReturn_successFalse", (done) => {
+            chai
+                .request(server)
+                .post("/books/filter/byRange")
+                .send(bookData.books.costRangesWithoutMin)
+                .end((err, res) => {
+                    res.body.success.should.have.equal(false);
+                    res.body.message.should.have.equal('"[0].min" is required');
+
+                    done();
+                });
+        });
+
+        it.only("WhenGivenRangeMaxValueMissing_shouldReturn_successFalse", (done) => {
+            chai
+                .request(server)
+                .post("/books/filter/byRange")
+                .send(bookData.books.costRangesWithoutMax)
+                .end((err, res) => {
+                    res.body.success.should.have.equal(false);
+                    res.body.message.should.have.equal('"[1].max" is required');
+                    done();
+                });
+        });
+
+        it.only("WhenGivenRangIsSingleObjectWithoutArray_shouldReturn_successFalse", (done) => {
+            chai
+                .request(server)
+                .post("/books/filter/byRange")
+                .send(bookData.books.singleObjectOfCostRange)
+                .end((err, res) => {
+                    res.body.success.should.have.equal(false);
+                    res.body.message.should.have.equal('"value" must be an array');
+
+                    done();
+                });
+        });
     });
 
     /**
