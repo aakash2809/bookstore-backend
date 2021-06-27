@@ -447,6 +447,34 @@
                 ],
                 "deprecated": false
             }
+        },
+        "/books/filter/byAuthor": {
+            "get": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "get book's author with their written books and their count",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "retirved successfully"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "deprecated": false
+            }
         }
     },
     "securityDefinitions": {
