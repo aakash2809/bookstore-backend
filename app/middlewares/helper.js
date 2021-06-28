@@ -93,7 +93,7 @@ class Helper {
                 next();
             });
         } catch (error) {
-            return res.status(401).send({
+            return res.status(500).send({
                 success: false,
                 message: `some error occured ${error}`,
             });
@@ -156,7 +156,7 @@ class Helper {
             },
             (err, data) => {
                 if (err) {
-
+                    logger.error(err);
                 } else {
                     const mainOptions = {
                         from: process.env.EMAIL_USER,

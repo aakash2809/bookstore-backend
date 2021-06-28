@@ -2,6 +2,7 @@ const passport = require('passport');
 const userControllers = require('../controllers/user');
 const helper = require('../middlewares/helper');
 const { authenticateToken } = require('../middlewares/googleAuth');
+const logger = require('../../config/logger');
 
 class UserRoutes {
   routeToUserController = (app) => {
@@ -26,7 +27,7 @@ class UserRoutes {
       authenticateToken, userControllers.socialLogin);
 
     app.get('/auth/fail', (req, res) => {
-      console.log('loggged fail');
+      logger.info('loggged fail');
       res.send('user logged in failed');
     });
 
