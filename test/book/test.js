@@ -12,10 +12,26 @@ const resposnsCode = require("../../util/staticFile.json");
 chai.use(chaiHttp);
 const bookData = require("./book.json");
 chai.should();
-const token = bookData.books.properToken.token;
+let token = '';
 const bookId = bookData.books.registeredBookId.bookId;
 
+
+
+
 describe("books API", () => {
+    /**
+     * @description before hook will be executed first and
+     * genrate token and assigned it to global variable
+     */
+    before((done) => {
+        chai.request(server)
+            .post('/adminLogin')
+            .send(bookData.books.validAdmin)
+            .end((err, response) => {
+                token = response.body.token;
+                done();
+            });
+    });
 
     /**
      * @description Test the GET API
@@ -26,21 +42,32 @@ describe("books API", () => {
             chai
                 .request(server)
                 .get("/books")
-                .set("Authorization", token)
                 .end((err, res) => {
                     res.body.should.be.a("object");
                     done();
                 });
         });
 
-        // test the GET API when points are not proper
+        // test the GET API when end points are not proper
         it("givenbooks_WhenNotGivenProperEndPoints_ShouldNotReturnObject", (done) => {
             chai
                 .request(server)
                 .get("/wrongEndPoint")
-                .set("Authorization", token)
+                .set('Authorization', `Bearer ${token}`)
                 .end((err, res) => {
                     res.should.have.status(404);
+                    done();
+                });
+        });
+
+        it("givenbooks_WhenGivenProperEndPoints_ShouldReturnObje", (done) => {
+            chai
+                .request(server)
+                .get("/books/filter/byAuthor")
+                .set('Authorization', `Bearer ${token}`)
+                .end((err, res) => {
+                    res.body.success.should.be.equal(true);
+                    res.body.should.be.a("object");
                     done();
                 });
         });
@@ -56,7 +83,7 @@ describe("books API", () => {
             chai
                 .request(server)
                 .post("/book/")
-                .set("Authorization", token)
+                .set('Authorization', `Bearer ${token}`)
                 .send(book)
                 .end((error, res) => {
                     res.should.have.status(200);
@@ -70,7 +97,7 @@ describe("books API", () => {
             chai
                 .request(server)
                 .post("/book/")
-                .set("Authorization", token)
+                .set('Authorization', `Bearer ${token}`)
                 .send(book)
                 .end((req, res) => {
                     res.body.status_code.should.have.equal(resposnsCode.BAD_REQUEST);
@@ -84,7 +111,7 @@ describe("books API", () => {
             chai
                 .request(server)
                 .post("/book/")
-                .set("Authorization", token)
+                .set('Authorization', `Bearer ${token}`)
                 .send(book)
                 .end((error, res) => {
                     res.body.status_code.should.have.equal(resposnsCode.BAD_REQUEST);
@@ -99,7 +126,7 @@ describe("books API", () => {
             chai
                 .request(server)
                 .post("/book/")
-                .set("Authorization", token)
+                .set('Authorization', `Bearer ${token}`)
                 .send(book)
                 .end((error, res) => {
                     res.body.status_code.should.have.equal(resposnsCode.BAD_REQUEST);
@@ -114,7 +141,7 @@ describe("books API", () => {
             chai
                 .request(server)
                 .post("/book/")
-                .set("Authorization", token)
+                .set('Authorization', `Bearer ${token}`)
                 .send(book)
                 .end((err, res) => {
                     res.body.status_code.should.have.equal(resposnsCode.BAD_REQUEST);
@@ -128,7 +155,7 @@ describe("books API", () => {
             chai
                 .request(server)
                 .post("/book/")
-                .set("Authorization", token)
+                .set('Authorization', `Bearer ${token}`)
                 .send(book)
                 .end((err, res) => {
                     res.body.status_code.should.have.equal(resposnsCode.BAD_REQUEST);
@@ -142,7 +169,7 @@ describe("books API", () => {
             chai
                 .request(server)
                 .post("/book/")
-                .set("Authorization", token)
+                .set('Authorization', `Bearer ${token}`)
                 .send(book)
                 .end((err, res) => {
                     res.body.status_code.should.have.equal(resposnsCode.BAD_REQUEST);
@@ -151,7 +178,7 @@ describe("books API", () => {
                 });
         });
 
-        it.only("whenGivenProperEndPoints_shouldReturn_objectAndSuccessTrue", (done) => {
+        it("whenGivenProperEndPoints_shouldReturn_objectAndSuccessTrue", (done) => {
             chai
                 .request(server)
                 .post("/books/filter/byRange")
@@ -163,7 +190,7 @@ describe("books API", () => {
                 });
         });
 
-        it.only("WhenGivenRangeMinValueMissing_shouldReturn_successFalse", (done) => {
+        it("WhenGivenRangeMinValueMissing_shouldReturn_successFalse", (done) => {
             chai
                 .request(server)
                 .post("/books/filter/byRange")
@@ -176,7 +203,7 @@ describe("books API", () => {
                 });
         });
 
-        it.only("WhenGivenRangeMaxValueMissing_shouldReturn_successFalse", (done) => {
+        it("WhenGivenRangeMaxValueMissing_shouldReturn_successFalse", (done) => {
             chai
                 .request(server)
                 .post("/books/filter/byRange")
@@ -188,7 +215,7 @@ describe("books API", () => {
                 });
         });
 
-        it.only("WhenGivenRangIsSingleObjectWithoutArray_shouldReturn_successFalse", (done) => {
+        it("WhenGivenRangIsSingleObjectWithoutArray_shouldReturn_successFalse", (done) => {
             chai
                 .request(server)
                 .post("/books/filter/byRange")
@@ -212,7 +239,7 @@ describe("books API", () => {
             chai
                 .request(server)
                 .put(`/book/${bookId}`)
-                .set("Authorization", token)
+                .set('Authorization', `Bearer ${token}`)
                 .send(book)
                 .end((err, res) => {
                     res.body.status_code.should.have.equal(resposnsCode.SUCCESS);
@@ -228,7 +255,7 @@ describe("books API", () => {
             chai
                 .request(server)
                 .put(`/book/${bookId}`)
-                .set("Authorization", token)
+                .set('Authorization', `Bearer ${token}`)
                 .send(book)
                 .end((err, res) => {
                     res.body.status_code.should.have.equal(resposnsCode.BAD_REQUEST);
@@ -243,7 +270,7 @@ describe("books API", () => {
             chai
                 .request(server)
                 .put(`/book/${bookId}`)
-                .set("Authorization", token)
+                .set('Authorization', `Bearer ${token}`)
                 .send(book)
                 .end((err, res) => {
                     res.body.status_code.should.have.equal(resposnsCode.BAD_REQUEST);
@@ -258,7 +285,7 @@ describe("books API", () => {
             chai
                 .request(server)
                 .put("/book/" + bookId)
-                .set("Authorization", token)
+                .set('Authorization', `Bearer ${token}`)
                 .send(book)
                 .end((err, res) => {
                     res.body.status_code.should.have.equal(resposnsCode.BAD_REQUEST);
@@ -273,7 +300,7 @@ describe("books API", () => {
             chai
                 .request(server)
                 .put("/book/addtobag/" + bookId)
-                .set("Authorization", token)
+                .set('Authorization', `Bearer ${token}`)
                 .send(bookId)
                 .end((err, res) => {
                     res.body.status.should.have.equal(resposnsCode.SUCCESS);
@@ -285,11 +312,11 @@ describe("books API", () => {
     });
 
     describe("DELETE /deleteBook/bookId", function () {
-        it("givenbooks_WhenGivenProperId_ShouldDelete_book", (done) => {
+        it.skip("givenbooks_WhenGivenProperId_ShouldDelete_book", (done) => {
             chai
                 .request(server)
                 .delete("/deleteBook/" + bookId)
-                .set("Authorization", token)
+                .set('Authorization', `Bearer ${token}`)
                 .end((err, res) => {
                     res.body.status_code.should.have.equal(resposnsCode.SUCCESS);
                     res.body.message.should.have.equal('book deleted successfully!');

@@ -155,6 +155,10 @@
                 "min": 0,
                 "max": 100
             }
+        },
+        "validAdmin": {
+            "email": "aakashrajak34@gmail.com",
+            "password": "System123#"
         }
     }
 }
