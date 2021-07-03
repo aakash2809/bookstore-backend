@@ -148,7 +148,6 @@ class BookController {
      * @method delete is service class method
      * @param response is used to send the response
      */
-
     delete(req, res) {
         try {
             const bookData = {
@@ -321,7 +320,7 @@ class BookController {
         } catch (error) {
             logger.error('there is some error to filter books...', error);
             return res.status(500).send({
-                status: false,
+                success: false,
                 message: 'there is some error to filter books....',
                 error,
             });
