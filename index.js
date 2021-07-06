@@ -1,8 +1,11 @@
 const express = require('express');
+const axios = require('axios');
+
 
 const app = express();
-// const bookServices = require('./app/services/book');
-const bookModel = require('./app/models/book');
+const baseUrl = 'http://localhost:2000';
+
+app.use(express.static(__dirname + '/public'))
 
 // listen for request
 const server = app.listen(4000, () => {
@@ -11,20 +14,16 @@ const server = app.listen(4000, () => {
 
 const io = require('socket.io')(server);
 
+function getData(payload) {
+    console.log('axios', payload);
+    return axios.post(`${baseUrl}/books/filter/byRange`, payload);
+}
 io.on('connection', (socket) => {
     console.log('connected with soket');
     socket.on('range', async (payload) => {
         let result = [];
-        console.log('got message', payload);
-        let booksCostRange = [];
-        booksCostRange = payload.costRange;
-        for (let i = 0; i < booksCostRange.length; i++) {
-            let booksInRange = { range: '', numberOfBooks: '' };
-            booksInRange.range = `${booksCostRange[i].min}-${booksCostRange[i].max}`;
-            booksInRange.numberOfBooks = await bookModel.filterBooks(booksCostRange[i]);
-            result[i] = booksInRange;
-        }
-        console.log('serviceresult', result);
-        socket.emit('range', result);
+        result = await getData(payload);
+        console.log('result', result.data.data);
+        socket.emit('range', result.data.data);
     });
 });
