@@ -5,7 +5,7 @@
         "title": "Bookstore",
         "description": "Bookstore Application API"
     },
-    "host": "localhost:4000",
+    "host": "localhost:2000",
     "basePath": "/",
     "tags": [
         {
