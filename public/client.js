@@ -1,10 +1,3 @@
-// const io = require('socket.io-client');
-// const d3 = require('d3');
-// import io from '/socket.io/socket.io.js';
-// import * as d3 from 'd3';
-// /socket.io/socket.io.js
-// import d3 from 'd3';
-
 let data1 = [];
 const socket = io('http://localhost:4000');
 
@@ -39,26 +32,7 @@ socket.on('range', (payload) => {
     data1 = payload;
     console.log('client', data1);
 });
-console.log('data1', data1);
-// const xScale = d3
-//     .scaleBand()
-//     .domain(DUMMY_DATA.map((dataPoint) => dataPoint.range))
-//     .rangeRound([0, 250])
-//     .padding(0.1);
-// const yScale = d3.scaleLinear().domain([0, 15]).range([200, 0]);
 
-// const container = d3.select('svg').classed('container', true);
-
-// const bars = container
-//     .selectAll('.bar')
-//     .data(DUMMY_DATA)
-//     .enter()
-//     .append('rect')
-//     .classed('bar', true)
-//     .attr('width', xScale.bandwidth())
-//     .attr('height', (data) => 200 - yScale(data.numberOfBooks))
-//     .attr('x', data => xScale(data.range))
-//     .attr('y', data => yScale(data.numberOfBooks));
 const data = [
     { range: '0-100', numberOfBooks: 3 },
     { range: '101-200', numberOfBooks: 3 },
@@ -80,11 +54,11 @@ const svg = d3.select('#d3-container')
 const x = d3.scaleBand()
     .domain(d3.range(data.length))
     .range([margin.left, width - margin.right])
-    .padding(0.1)
+    .padding(0.1);
 
 const y = d3.scaleLinear()
     .domain([0, 100])
-    .range([height - margin.bottom, margin.top])
+    .range([height - margin.bottom, margin.top]);
 
 svg
     .append('g')
@@ -102,13 +76,13 @@ svg
 function yAxis(g) {
     g.attr('transform', `translate(${margin.left}, 0)`)
         .call(d3.axisLeft(y).ticks(null, data.format))
-        .attr('font-size', '20px')
+        .attr('font-size', '20px');
 }
 
 function xAxis(g) {
     g.attr('transform', `translate(0,${height - margin.bottom})`)
         .call(d3.axisBottom(x).tickFormat(i => data[i].range))
-        .attr('font-size', '20px')
+        .attr('font-size', '20px');
 }
 
 svg.append('g').call(xAxis);
