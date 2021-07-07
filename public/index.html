@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3.js</title>
+    <style>
+        /* .container {
+            width: 250px;
+            height: 200px;
+            border: 1px solid #720570;
+        }
+
+        .bar {
+            fill: #720570;
+        } */
+    </style>
+    <script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+    <script src="https://d3js.org/d3-scale.v3.min.js" charset="utf-8"></script>
+    <!-- <script type="module" src="./client.js" charset="utf-8">
+    </script>
+    <script src="https://unpkg.com/d3?module"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <div style="text-align: center;">
+        <h1>D3.js Barchart</h1>
+        <div id="d3-container" />
+    </div>
+    <script type="text/javascript" src="./client.js"></script>
+</body>
+<!-- <body>
+    <h1>hi</h1>
+    <svg></svg>
+    <script type="module" src="./client.js" charset="utf-8">
+    </script>
+    <script>
+        
+        // const DUMMY_DATA = [
+        //     { range: '0-100', numberOfBooks: 3 },
+        //     { range: '101-200', numberOfBooks: 3 },
+        //     { range: '201-300', numberOfBooks: 40 },
+        //     { range: '301-500', numberOfBooks: 9 },
+        //     { range: '501-1000', numberOfBooks: 15 },
+        // ];
+
+        // const xScale = d3
+        //     .scaleBand()
+        //     .domain(DUMMY_DATA.map((dataPoint) => dataPoint.range))
+        //     .rangeRound([0, 250])
+        //     .padding(0.1);
+        // const yScale = d3.scaleLinear().domain([0, 15]).range([200, 0]);
+
+        // const container = d3.select('svg').classed('container', true);
+
+        // const bars = container
+        //     .selectAll('.bar')
+        //     .data(DUMMY_DATA)
+        //     .enter()
+        //     .append('rect')
+        //     .classed('bar', true)
+        //     .attr('width', xScale.bandwidth())
+        //     .attr('height', (data) => 200 - yScale(data.numberOfBooks))
+        //     .attr('x', data => xScale(data.range))
+        //     .attr('y', data => yScale(data.numberOfBooks));
+    </script>
+</body> -->
+
+</html>
