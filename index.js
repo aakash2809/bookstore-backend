@@ -1,11 +1,11 @@
 const express = require('express');
 const axios = require('axios');
-
+const cors = require('cors');
 
 const app = express();
 const baseUrl = 'http://localhost:2000';
-
-app.use(express.static(__dirname + '/public'))
+app.use(cors());
+app.use(express.static(__dirname + '/public/'));
 
 // listen for request
 const server = app.listen(4000, () => {
@@ -14,10 +14,15 @@ const server = app.listen(4000, () => {
 
 const io = require('socket.io')(server);
 
-function getData(payload) {
+/* function getData(payload) {
     console.log('axios', payload);
     return axios.post(`${baseUrl}/books/filter/byRange`, payload);
-}
+} */
+let getData = (payload) => {
+    console.log('axios', payload);
+    return axios.post(`${baseUrl}/books/filter/byRange`, payload);
+};
+
 io.on('connection', (socket) => {
     console.log('connected with soket');
     socket.on('range', async (payload) => {
@@ -27,3 +32,4 @@ io.on('connection', (socket) => {
         socket.emit('range', result.data.data);
     });
 });
+
