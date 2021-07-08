@@ -34,7 +34,7 @@ socket.on('range', (payload) => {
     console.log('client', payload);
 });
 
-function createGraph() {
+let createGraph = () => {
     const width = 900;
     const height = 450;
     const margin = { top: 50, bottom: 50, left: 50, right: 50 };
@@ -67,18 +67,18 @@ function createGraph() {
         .attr('height', d => y(0) - y(d.numberOfBooks))
         .attr('width', x.bandwidth());
 
-    function yAxis(g) {
+    let yAxis = (g) => {
         g.attr('transform', `translate(${margin.left}, 0)`)
             .call(d3.axisLeft(y).ticks(null, data.format))
             .attr('font-size', '20px');
-    }
+    };
 
-    function xAxis(g) {
+    let xAxis = (g) => {
         g.attr('transform', `translate(0,${height - margin.bottom})`)
             .call(d3.axisBottom(x).tickFormat(i => data[i].range))
             .attr('font-size', '20px');
-    }
+    };
+
     svg.append('g').call(xAxis);
     svg.append('g').call(yAxis);
-    svg.node();
-}
+};
