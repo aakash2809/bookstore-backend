@@ -2,6 +2,8 @@
 * @file          index.js
 * @description   This file contains all socket activity for realtime communication
 * @requires      logger is a reference to save logs in log files
+* @requires      socket.io enables real-time bidirectional event-based communication
+* @requires      axios is Promise based HTTP client for the browser and node.js
 * @author        Aakash Rajak <aakashrajak2809@gmail.com>
 *--------------------------------------------------------------------------------------*/
 const express = require('express');
@@ -33,6 +35,7 @@ let getData = (payload) => {
 /**
  * @description establish connection with client, emit response as per
  * requested event by client
+ * @param socket is reponsible to emit and on envets
  */
 io.on('connection', (socket) => {
     logger.info('connected with soket');

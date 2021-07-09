@@ -1,3 +1,10 @@
+/**
+* @file          client.js
+* @description   This file is linked with html file 'index.html' for visualization of
+*                bar graph
+* @author        Aakash Rajak <aakashrajak2809@gmail.com>
+*--------------------------------------------------------------------------------------*/
+
 let data = [];
 const socket = io('http://localhost:4000');
 
@@ -26,14 +33,25 @@ let payload = {
     ],
 };
 
+/**
+  * @description this function emit event 'range' with payload to the server
+  * @param {*} payload contains the books cost ranges
+  */
 socket.emit('range', payload);
 
+/**
+  * @description this function on event 'range' with payload to the server
+  * @param {*} payload contains number of books, corrousponding ranges
+  */
 socket.on('range', (payload) => {
     data = payload;
     createGraph();
-    console.log('client', payload);
 });
 
+/**
+  * @description this function creates the bar graph for
+  * number of books, corrousponding ranges
+  */
 let createGraph = () => {
     const width = 900;
     const height = 450;
@@ -67,12 +85,18 @@ let createGraph = () => {
         .attr('height', d => y(0) - y(d.numberOfBooks))
         .attr('width', x.bandwidth());
 
+    /**
+     * @description create scale for y axis
+     */
     let yAxis = (g) => {
         g.attr('transform', `translate(${margin.left}, 0)`)
             .call(d3.axisLeft(y).ticks(null, data.format))
             .attr('font-size', '20px');
     };
 
+    /**
+     * @description create scale for x axis
+     */
     let xAxis = (g) => {
         g.attr('transform', `translate(0,${height - margin.bottom})`)
             .call(d3.axisBottom(x).tickFormat(i => data[i].range))
