@@ -1,19 +1,19 @@
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
-const { Server } = require('socket.io');
 const logger = require('./config/logger');
 
-const io = new Server();
 const app = express();
 const baseUrl = 'http://localhost:2000';
 app.use(cors());
 app.use(express.static(__dirname + '/public/'));
 
 // listen for request
-app.listen(4000, () => {
-    logger.info('Connected, server started listening on port :', 4000);
+const server = app.listen(4000, () => {
+    logger.info(`Connected, server started listening on port :`, 4000);
 });
+
+const io = require('socket.io')(server);
 
 let getData = (payload) => {
     return axios.post(`${baseUrl}/books/filter/byRange`, payload);
