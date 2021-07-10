@@ -5,7 +5,7 @@
 * @author        Aakash Rajak <aakashrajak2809@gmail.com>
 *--------------------------------------------------------------------------------------*/
 
-const socket = io('http://localhost:4000');
+const socket = io('http://localhost:2000');
 let data = [];
 
 let payload = {
