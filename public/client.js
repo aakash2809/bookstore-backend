@@ -5,8 +5,8 @@
 * @author        Aakash Rajak <aakashrajak2809@gmail.com>
 *--------------------------------------------------------------------------------------*/
 
-let data = [];
 const socket = io('http://localhost:4000');
+let data = [];
 
 let payload = {
     costRange: [

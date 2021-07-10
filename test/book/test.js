@@ -6,7 +6,6 @@
      ----------------------------------------------------------------------------------------------*/
 let chai = require("chai");
 let chaiHttp = require("chai-http");
-const { response } = require("../../server");
 let server = require("../../server");
 const resposnsCode = require("../../util/staticFile.json");
 chai.use(chaiHttp);
@@ -14,9 +13,6 @@ const bookData = require("./book.json");
 chai.should();
 let token = '';
 const bookId = bookData.books.registeredBookId.bookId;
-
-
-
 
 describe("books API", () => {
     /**
