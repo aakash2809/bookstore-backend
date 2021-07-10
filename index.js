@@ -10,15 +10,17 @@ const express = require('express');
 const axios = require('axios');
 const socket = require('socket.io');
 const logger = require('./config/logger');
+require('dotenv').config();
 
 const app = express();
-const baseUrl = 'http://localhost:2000';
+const baseUrl = process.env.BASE_URL;
+const port = process.env.SOCKET_PORT;
 
 app.use(express.static(__dirname + '/public/'));
 
 // listen for request
-const server = app.listen(4000, () => {
-    logger.info('Connected, server started listening on port :', 4000);
+const server = app.listen(port, () => {
+    logger.info(`Connected, server started listening on port :${port}`);
 });
 
 const io = socket(server);
@@ -45,3 +47,5 @@ io.on('connection', (socket) => {
         socket.emit('range', result.data.data);
     });
 });
+
+module.exports = app;
