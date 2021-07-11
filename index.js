@@ -41,10 +41,11 @@ let getData = (payload) => {
  */
 io.on('connection', (socket) => {
     logger.info('connected with soket');
+    socket.emit('connection', 'connected');
     socket.on('range', async (payload) => {
         let result = [];
         result = await getData(payload);
-        socket.emit('range', result.data.data);
+        socket.emit('range', result.data);
     });
 });
 
