@@ -11,7 +11,6 @@ chai.should();
 chai.expect();
 chai.use(chaiHttp);
 require('dotenv').config();
-const logger = require('../../config/logger');
 
 let costRangesSamples = require("./testsample.json");
 
@@ -19,32 +18,43 @@ describe('Suite of unit tests', () => {
     var socket;
     beforeEach(function () {
         // Setup
-        socket = io.connect(process.env.SOCKET_URL);
-        socket.on('connect', () => {
-            logger.info('conncted...');
-        });
+        socket = io(process.env.SOCKET_URL);
     });
 
     describe('test', () => {
         it('should send payload and receive object from db', (done) => {
-
-            // Set up event listener.  This is the actual test we're running
             socket.emit('range', costRangesSamples.booksCostRanges);
-            let sockeResponse = socket.on('range', (result) => {
-                data = result;
+            socket.on('range', (result) => {
+                result.should.be.a('Object');
+                done();
             });
-            sockeResponse.should.be.a('Object');
-            done();
         });
 
-        it("WhenGivenRangeMinValueMissing_shouldReturn_shouldNotReturnData", (done) => {
-            let data = { response: '' }
+        it("WhenGivenRangeMinValueMissing_shouldReturn_successFalse", (done) => {
             socket.emit('range', costRangesSamples.costRangesWithoutMin);
             socket.on('range', (result) => {
-                data.response = result;
+                result.success.should.have.equal(false);
+                result.message.should.have.equal('"[0].min" is required');
+                done();
             });
-            data.response.should.have.equal('');
-            done();
         });
-    })
+
+        it("WhenGivenRangeMaxValueMissing_shouldReturn_successFalse", (done) => {
+            socket.emit('range', costRangesSamples.costRangesWithoutMax);
+            socket.on('range', (result) => {
+                result.success.should.have.equal(false);
+                result.message.should.have.equal('"[1].max" is required');
+                done();
+            });
+        });
+
+        it("WhenGivenRangIsSingleObjectWithoutArray_shouldReturn_successFalse", (done) => {
+            socket.emit('range', costRangesSamples.singleObjectOfCostRange);
+            socket.on('range', (result) => {
+                result.success.should.have.equal(false);
+                result.message.should.have.equal('"value" must be an array');
+                done();
+            });
+        });
+    });
 });
