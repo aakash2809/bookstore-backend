@@ -41,10 +41,10 @@ socket.emit('range', payload);
 
 /**
   * @description this function on event 'range' with payload to the server
-  * @param {*} payload contains number of books, corrousponding ranges
+  * @param {*} result contains number of books, corrousponding ranges
   */
-socket.on('range', (payload) => {
-    data = payload;
+socket.on('range', (result) => {
+    data = result.data;
     createGraph();
 });
 
