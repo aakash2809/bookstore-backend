@@ -33,5 +33,22 @@
                 "max": 200
             }
         ]
+    },
+    "costRangesWithoutMax": {
+        "costRange": [
+            {
+                "min": 101,
+                "max": 100
+            },
+            {
+                "min": 101
+            }
+        ]
+    },
+    "singleObjectOfCostRange": {
+        "costRange": {
+            "min": 0,
+            "max": 100
+        }
     }
 }
