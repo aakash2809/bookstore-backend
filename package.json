@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "begin": "nodemon index.js",
-    "test": "mocha test/book/test.js",
+    "test": "mocha test/*/test.js",
     "coverage": "nyc npm run test --reporter=text",
     "lint": "eslint ./",
     "lint:fix": "eslint --fix --ext .js,.jsx ."
