@@ -25,8 +25,8 @@ describe("books API", () => {
             .send(bookData.books.validAdmin)
             .end((err, response) => {
                 token = response.body.token;
-                done();
             });
+        done();
     });
 
     /**
@@ -219,7 +219,6 @@ describe("books API", () => {
                 .end((err, res) => {
                     res.body.success.should.have.equal(false);
                     res.body.message.should.have.equal('"value" must be an array');
-
                     done();
                 });
         });

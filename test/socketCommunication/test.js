@@ -16,7 +16,7 @@ let costRangesSamples = require("./testsample.json");
 
 describe('Suite of unit tests', () => {
     var socket;
-    beforeEach(function () {
+    beforeEach(() => {
         // Setup
         socket = io(process.env.SOCKET_URL);
     });
@@ -28,6 +28,7 @@ describe('Suite of unit tests', () => {
                 result.should.be.a('Object');
                 done();
             });
+
         });
 
         it("WhenGivenRangeMinValueMissing_shouldReturn_successFalse", (done) => {
